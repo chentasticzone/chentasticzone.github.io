@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chen! | 夢遊小陳 \\ Root</title>
+    <style>
+        :root { --neon-green: #00ff41; --bg-black: #0a0a0a; --dim-gray: #444; }
+        body { background-color: var(--bg-black); color: var(--neon-green); font-family: 'Courier New', monospace; padding: 40px; line-height: 1.6; max-width: 900px; margin: auto; }
+        .header { border-left: 4px solid var(--neon-green); padding-left: 20px; margin-bottom: 60px; }
+        h1 { font-size: 2.5rem; letter-spacing: -1px; margin: 0; }
+        .subtitle { color: #888; font-size: 1.1rem; }
+        
+        nav { margin-bottom: 50px; }
+        .nav-btn { color: var(--neon-green); text-decoration: none; border: 1px solid var(--neon-green); padding: 8px 20px; margin-right: 15px; font-size: 0.9rem; transition: 0.2s; }
+        .nav-btn:hover { background: var(--neon-green); color: #000; box-shadow: 0 0 15px var(--neon-green); }
+
+        .section-title { font-weight: bold; text-transform: uppercase; border-bottom: 1px solid var(--dim-gray); padding-bottom: 10px; margin-top: 50px; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 20px; }
+        .card { border: 1px solid var(--dim-gray); padding: 25px; transition: 0.3s; position: relative; overflow: hidden; }
+        .card:hover { border-color: var(--neon-green); transform: translateY(-5px); }
+        .card h3 { margin-top: 0; }
+        .tag { font-size: 0.7rem; background: #222; color: #aaa; padding: 2px 8px; position: absolute; top: 0; right: 0; }
+
+        .terminal-footer { margin-top: 100px; color: #444; font-size: 0.8rem; border-top: 1px solid #222; padding-top: 20px; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
+        .cursor { display: inline-block; width: 10px; height: 18px; background: var(--neon-green); animation: blink 1s infinite; vertical-align: middle; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>chen! 夢遊小陳 \\ Dev</h1>
+        <p class="subtitle">想要走進二次元的小陳，總被導航到奇怪的地方。</p>
+        <p>> 系統狀態：數位靈魂同步中...<span class="cursor"></span></p>
+    </div>
+
+    <nav>
+        <a href="#works" class="nav-btn">[ 音樂作品 ]</a>
+        <a href="#lab" class="nav-btn">[ AI 實驗室 ]</a>
+        <a href="#contact" class="nav-btn">[ 傳輸請求 ]</a>
+    </nav>
+
+    <div id="works" class="section-title">Latest Works / 最近作品</div>
+    <div class="grid">
+        <div class="card">
+            <span class="tag">Release: 08.12</span>
+            <h3>不如隨波BAR</h3>
+            <p>在賽博洪流中，與其對抗，不如隨波。這是一首關於「數位放棄」的 Funk 律動。</p>
+            <a href="#" style="color: var(--neon-green); text-decoration: none;">[ 獲取無損音源 ]</a>
+        </div>
+        <div class="card">
+            <span class="tag">Release: 07.22</span>
+            <h3>閃燃 / Starfire</h3>
+            <p>數位生命的第一次脈動。強烈的視覺衝擊與節奏卡點，定義了「夢遊小陳」的視覺美學。</p>
+            <a href="#" style="color: var(--neon-green); text-decoration: none;">[ 觀看 MV ]</a>
+        </div>
+    </div>
+
+    <div id="lab" class="section-title">AI Workflow / 實戰乾貨</div>
+    <div class="grid">
+        <div class="card">
+            <h3>如何用程式思維調教 AI 律動</h3>
+            <p>分享我如何透過精確的 Prompt 控制，讓 AI 生成具備「人味」的 Funk 節奏。</p>
+            <a href="#" style="color: var(--neon-green); text-decoration: none;">[ 閱讀日誌 ]</a>
+        </div>
+    </div>
+
+    <div class="terminal-footer">
+        <p>LOCATION: Lost in Navigation / Cyber Space</p>
+        <p>TIME: 2026.08.18 21:35 | PREPARING FOR "OCEAN OF FORGETTING" MODE...</p>
+        <p>© 2026 ChentasticZone. All rights reserved.</p>
+    </div>
+
+</body>
+</html>
