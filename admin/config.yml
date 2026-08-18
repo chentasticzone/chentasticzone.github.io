@@ -9,7 +9,7 @@ public_folder: "/images/uploads"
 collections:
   - name: "blog"
     label: "AI 實戰日誌"
-    folder: "_posts"
+    folder: "chen/_posts"
     create: true
     fields:
       - {label: "標題", name: "title", widget: "string"}
