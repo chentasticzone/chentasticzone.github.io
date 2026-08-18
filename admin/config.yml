@@ -1,0 +1,18 @@
+backend:
+  name: github
+  repo: chentasticzone/chentasticzone.github.io
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "blog"
+    label: "AI 實戰日誌"
+    folder: "_posts"
+    create: true
+    fields:
+      - {label: "標題", name: "title", widget: "string"}
+      - {label: "發布日期", name: "date", widget: "datetime"}
+      - {label: "AI 工具", name: "list", widget: "list", summary: "使用的 AI 模型"}
+      - {label: "正文", name: "body", widget: "markdown"}
