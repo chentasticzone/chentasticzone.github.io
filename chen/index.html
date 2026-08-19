@@ -1,8 +1,6 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<html lang="zh-Hant"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>chen! ｜ 夢遊小陳</title>
 <style>
   :root {
@@ -27,17 +25,22 @@
   }
 
   /* ---------- Header / centered logo ---------- */
-  header {
+    header {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 40px 20px 4px;
+    padding: 20px 20px 4px; /* 這裡原本是 40px，已縮減 */
   }
-  .logo {
-    font-weight: 800;
-    font-size: 42px;
-    letter-spacing: 1px;
-    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  .logo-link {
+    display: block;
+    text-decoration: none;
+  }
+  .logo-img {
+    height: 63px; /* 這裡原本是 42px，已放大 50% */
+    width: auto;
+    display: block;
+  }
+var(--accent-2));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -222,17 +225,20 @@
 <body>
 
   <header>
-    <div class="logo">chen<span>!</span></div>
+        <a href="./index.html" class="logo-link">
+      <img src="icon.png" alt="chen!" class="logo-img">
+    </a>
+
   </header>
 
   <main>
     <section class="stage" aria-label="單曲封面畫廊">
-      <div class="track" id="track"></div>
+      <div class="track" id="track"><div class="card active" style="transform: translateX(0px) translateZ(0px) rotateY(0deg) scale(1); z-index: 100; opacity: 1; filter: none;"><img src="/covers/cover-1.png" alt="We Share（這份自在） 封面" crossorigin="anonymous"></div><div class="card" style="transform: translateX(240px) translateZ(-120px) rotateY(-32deg) scale(0.78); z-index: 99; opacity: 1; filter: brightness(0.82);"><img src="/covers/cover-2.png" alt="Born Digital 封面" crossorigin="anonymous"></div><div class="card" style="transform: translateX(480px) translateZ(-240px) rotateY(-32deg) scale(0.7); z-index: 98; opacity: 1; filter: brightness(0.82);"><img src="/covers/cover-3.png" alt="Sunset Drive 封面" crossorigin="anonymous"></div><div class="card" style="transform: translateX(720px) translateZ(-360px) rotateY(-32deg) scale(0.62); z-index: 97; opacity: 1; filter: brightness(0.82);"><img src="/covers/cover-4.png" alt="Midnight Tape 封面" crossorigin="anonymous"></div><div class="card" style="transform: translateX(960px) translateZ(-480px) rotateY(-32deg) scale(0.55); z-index: 96; opacity: 0; filter: brightness(0.82);"><img src="/covers/cover-5.png" alt="Dreamwalker 封面" crossorigin="anonymous"></div></div>
     </section>
 
     <div class="meta">
-      <div class="title" id="np-title">—</div>
-      <div class="sub" id="np-sub"></div>
+      <div class="title" id="np-title">We Share（這份自在）</div>
+      <div class="sub" id="np-sub">City Pop · Single</div>
     </div>
 
     <div class="controls">
@@ -243,7 +249,7 @@
 
     <section class="platforms">
       <div class="marquee">
-        <div class="marquee-track" id="marquee"></div>
+        <div class="marquee-track" id="marquee"><a class="brand" href="https://linktr.ee/chentasticzone" target="_blank" rel="noopener" aria-label="YouTube" style="--brand: #ff0000;"><img src="/logos/youtube.svg" alt="YouTube"></a><a class="brand" href="https://linktr.ee/chentasticzone" target="_blank" rel="noopener" aria-label="YouTube Music" style="--brand: #ff0000;"><img src="/logos/youtube-music.svg" alt="YouTube Music"></a><a class="brand" href="https://linktr.ee/chentasticzone" target="_blank" rel="noopener" aria-label="bilibili" style="--brand: #00A1D6;"><img src="/logos/bilibili.svg" alt="bilibili"><span class="name">bilibili</span></a><a class="brand" href="https://linktr.ee/chentasticzone" target="_blank" rel="noopener" aria-label="SoundCloud" style="--brand: #ff5500;"><img src="/logos/soundcloud.svg" alt="SoundCloud"></a><a class="brand" href="https://linktr.ee/chentasticzone" target="_blank" rel="noopener" aria-label="StreetVoice" style="--brand: #fc4d0b;"><span class="name">StreetVoice</span></a><a class="brand" href="https://linktr.ee/chentasticzone" target="_blank" rel="noopener" aria-label="汽水音樂" style="--brand: #fe2c55;"><span class="name">汽水音樂</span></a><a class="brand" href="https://linktr.ee/chentasticzone" target="_blank" rel="noopener" aria-label="Genius" style="--brand: #ffff64;"><img src="/logos/genius.svg" alt="Genius"><span class="name">Genius</span></a><a class="brand" href="https://linktr.ee/chentasticzone" target="_blank" rel="noopener" aria-label="抖音" style="--brand: #000000;"><span class="name">抖音</span></a><a class="brand" href="https://linktr.ee/chentasticzone" target="_blank" rel="noopener" aria-label="YouTube" style="--brand: #ff0000;"><img src="/logos/youtube.svg" alt="YouTube"></a><a class="brand" href="https://linktr.ee/chentasticzone" target="_blank" rel="noopener" aria-label="YouTube Music" style="--brand: #ff0000;"><img src="/logos/youtube-music.svg" alt="YouTube Music"></a><a class="brand" href="https://linktr.ee/chentasticzone" target="_blank" rel="noopener" aria-label="bilibili" style="--brand: #00A1D6;"><img src="/logos/bilibili.svg" alt="bilibili"><span class="name">bilibili</span></a><a class="brand" href="https://linktr.ee/chentasticzone" target="_blank" rel="noopener" aria-label="SoundCloud" style="--brand: #ff5500;"><img src="/logos/soundcloud.svg" alt="SoundCloud"></a><a class="brand" href="https://linktr.ee/chentasticzone" target="_blank" rel="noopener" aria-label="StreetVoice" style="--brand: #fc4d0b;"><span class="name">StreetVoice</span></a><a class="brand" href="https://linktr.ee/chentasticzone" target="_blank" rel="noopener" aria-label="汽水音樂" style="--brand: #fe2c55;"><span class="name">汽水音樂</span></a><a class="brand" href="https://linktr.ee/chentasticzone" target="_blank" rel="noopener" aria-label="Genius" style="--brand: #ffff64;"><img src="/logos/genius.svg" alt="Genius"><span class="name">Genius</span></a><a class="brand" href="https://linktr.ee/chentasticzone" target="_blank" rel="noopener" aria-label="抖音" style="--brand: #000000;"><span class="name">抖音</span></a></div>
       </div>
     </section>
   </main>
@@ -363,5 +369,6 @@
 
   setActive(0);
 </script>
-</body>
-</html>
+
+
+</body></html>
