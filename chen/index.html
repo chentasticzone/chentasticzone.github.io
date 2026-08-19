@@ -1,99 +1,367 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>chen! | 夢遊小陳 \\ Root</title>
-    <style>
-        :root {
-            --main-color: #00ff40;      /* 調整這裡的顏色，右邊會秒變 */
-            --sidebar-width: 280px;     /* 調整這裡的寬度，拉動版面 */
-            --bg-black: #0a0a0a;
-        }
-        body { background: var(--bg-black); color: #fff; font-family: 'Courier New', monospace; margin: 0; display: flex; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>chen! ｜ 夢遊小陳</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1c1726;
+    --muted: #9a94a2;
+    --accent: #ff8a2b;      /* orange */
+    --accent-2: #ffc48f;    /* light orange */
+    --card-w: 300px;
+    --card-h: 300px;
+    --logo-gray: #6a6a6a;
+  }
 
-        /* 左側固定欄：異業合作的門面 */
-        .sidebar {
-            width: var(--sidebar-width);
-            height: 100vh;
-            position: fixed;
-            padding: 40px;
-            border-right: 1px solid #222;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .logo h1 { color: var(--main-color); font-size: 1.5rem; margin: 0; line-height: 1; }
-        .nav-links a { display: block; color: #888; text-decoration: none; margin-top: 20px; font-size: 0.8rem; }
-        .nav-links a:hover { color: var(--main-color); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        /* 右側內容流 */
-        .main-content { margin-left: var(--sidebar-width); padding: 80px; width: 100%; max-width: 900px; }
-        .section { margin-bottom: 80px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-        .card { border: 1px solid #222; padding: 25px; transition: 0.3s; }
-        .card:hover { border-color: var(--main-color); background: #111; }
-        
-        /* 異業合作專屬按鈕 */
-        .btn-collab {
-            display: inline-block;
-            border: 1px solid #ff00ff;
-            color: #ff00ff;
-            padding: 12px 24px;
-            text-decoration: none;
-            font-size: 0.8rem;
-            margin-top: 20px;
-        }
-        .btn-collab:hover { background: #ff00ff; color: #000; box-shadow: 0 0 20px #ff00ff; }
-    </style>
+  html, body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: "Segoe UI", system-ui, -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif;
+    min-height: 100%;
+    overflow-x: hidden;
+  }
+
+  /* ---------- Header / centered logo ---------- */
+  header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px 4px;
+  }
+  .logo {
+    font-weight: 800;
+    font-size: 42px;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    user-select: none;
+    text-align: center;
+  }
+  .logo span { color: var(--fg); -webkit-text-fill-color: var(--fg); font-weight: 300; }
+
+  /* ---------- Coverflow gallery ---------- */
+  .stage {
+    position: relative;
+    height: 460px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1400px;
+    margin-top: 20px;
+  }
+  /* soft light-orange glow that only lives around the artwork */
+  .stage::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 560px;
+    height: 560px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(255,138,43,.16), rgba(255,138,43,.05) 45%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .track {
+    position: relative;
+    width: var(--card-w);
+    height: var(--card-h);
+    transform-style: preserve-3d;
+    z-index: 1;
+  }
+  .card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--card-w);
+    height: var(--card-h);
+    border-radius: 18px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform .55s cubic-bezier(.2,.7,.2,1), opacity .55s, filter .55s;
+    box-shadow: 0 24px 50px rgba(120,70,20,.16);
+    background: #f5f0ea;
+    will-change: transform;
+  }
+  .card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+  .card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.06);
+    pointer-events: none;
+  }
+  .card.active {
+    box-shadow: 0 30px 70px rgba(255,138,43,.28), 0 10px 26px rgba(120,70,20,.16);
+  }
+
+  /* ---------- Now playing info ---------- */
+  .meta {
+    text-align: center;
+    margin-top: 6px;
+    min-height: 58px;
+  }
+  .meta .title { font-size: 24px; font-weight: 700; }
+  .meta .sub { color: var(--muted); font-size: 14px; margin-top: 4px; letter-spacing: .04em; }
+
+  /* ---------- Controls ---------- */
+  .controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin-top: 10px;
+  }
+  .controls button {
+    background: none;
+    border: 0;
+    padding: 8px;
+    cursor: pointer;
+    color: var(--logo-gray);
+    display: grid;
+    place-items: center;
+    transition: color .2s, transform .1s;
+  }
+  .controls button:hover { color: var(--accent); }
+  .controls button:active { transform: scale(.9); }
+
+  /* left / right solid triangles */
+  .tri {
+    width: 0; height: 0;
+    border-style: solid;
+  }
+  .tri.left  { border-width: 8px 13px 8px 0; border-color: transparent currentColor transparent transparent; }
+  .tri.right { border-width: 8px 0 8px 13px; border-color: transparent transparent transparent currentColor; }
+
+  /* center play / pause */
+  .pp { position: relative; width: 18px; height: 20px; }
+  .pp.play::before {
+    content: ""; position: absolute; inset: 0; margin: auto;
+    width: 0; height: 0; border-style: solid;
+    border-width: 10px 0 10px 17px;
+    border-color: transparent transparent transparent currentColor;
+  }
+  .pp.pause::before, .pp.pause::after {
+    content: ""; position: absolute; top: 0; width: 5px; height: 20px; background: currentColor;
+  }
+  .pp.pause::before { left: 2px; }
+  .pp.pause::after  { right: 2px; }
+
+  /* ---------- Platform marquee ---------- */
+  .platforms {
+    margin-top: 34px;
+    padding: 8px 0 48px;
+  }
+  .marquee {
+    position: relative;
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .marquee-track {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    width: max-content;
+    animation: scroll 30s linear infinite;
+  }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* logo lockup: no frame; dark gray by default, brand color on hover */
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    white-space: nowrap;
+    color: var(--logo-gray);
+    transition: color .3s ease;
+  }
+  .brand img {
+    height: 26px;
+    width: auto;
+    display: block;
+    /* force any colored logo to a uniform dark gray */
+    filter: grayscale(1) brightness(.45) contrast(1.05);
+    transition: filter .3s ease;
+  }
+  .brand .name { font-weight: 700; font-size: 17px; letter-spacing: .01em; }
+  .brand:hover { color: var(--brand); }
+  .brand:hover img { filter: none; }
+
+  @media (max-width: 640px) {
+    :root { --card-w: 220px; --card-h: 220px; }
+    .stage { height: 340px; }
+    .stage::before { width: 380px; height: 380px; }
+    .logo { font-size: 34px; }
+    .marquee-track { gap: 44px; }
+    .brand .name { font-size: 15px; }
+    .brand img { height: 22px; }
+  }
+</style>
 </head>
 <body>
-    <aside class="sidebar">
-        <div class="logo">
-            <h1>chen!<br>夢遊小陳</h1>
-            <nav class="nav-links">
-                <a href="#about">// MISSION</a>
-                <a href="#works">// FOOTPRINT</a>
-                <a href="#contact">// COLLAB</a>
-            </nav>
-        </div>
-        <div class="status" style="font-size: 0.6rem; color: #444;">
-            SYSTEM STATUS: ONLINE<br>
-            © 2026 CHENTASTIC ZONE
-        </div>
-    </aside>
 
-    <main class="main-content">
-        <section id="about" class="section">
-            <h2 style="font-size: 2.5rem; color: var(--main-color);">想要走進二次元的小陳，<br>總被導航到奇怪的地方。</h2>
-            <p style="color: #888; line-height: 1.8;">
-                Virtual Artist born digital. Part code, part soul.<br>
-                將 10 年影音製作經驗轉化為精確的 AI 創作邏輯。
-            </p>
-        </section>
+  <header>
+    <div class="logo">chen<span>!</span></div>
+  </header>
 
-        <section id="works" class="section">
-            <div class="grid">
-                <div class="card">
-                    <h3 style="margin-top:0;">不如隨波BAR</h3>
-                    <p style="color:#888; font-size:0.9rem;">賽博 Funk 律動。歌詞已同步至全球平台。</p>
-                    <a href="https://azlyrics.biz/c/chen-%e5%a4%a2%e9%81%8a%e5%b0%8f%e9%99%b3-virtual-lyrics/" target="_blank" style="color:var(--main-color); text-decoration:none; font-size:0.8rem;">[ LYRICS ]</a>
-                </div>
-                <div class="card">
-                    <h3 style="margin-top:0;">Bandsintown</h3>
-                    <p style="color:#888; font-size:0.9rem;">虛擬演出動態與粉絲活躍度追蹤。</p>
-                    <a href="https://www.bandsintown.com/a/15516000" target="_blank" style="color:var(--main-color); text-decoration:none; font-size:0.8rem;">[ FOLLOW ]</a>
-                </div>
-            </div>
-        </section>
+  <main>
+    <section class="stage" aria-label="單曲封面畫廊">
+      <div class="track" id="track"></div>
+    </section>
 
-        <section id="contact" class="section">
-            <div class="card" style="border-color: #ff00ff;">
-                <h3>異業合作 / 音樂授權</h3>
-                <p style="color:#888;">我們提供專業的自動化授權流程，確保創意對接的高效與透明。</p>
-                <a href="https://www.notion.so/chentasticzone/7bf311c476864b8abd0333b9a1b2e825e" class="btn-collab" target="_blank">發起傳輸請求 (Notion)</a>
-            </div>
-        </section>
-    </main>
+    <div class="meta">
+      <div class="title" id="np-title">—</div>
+      <div class="sub" id="np-sub"></div>
+    </div>
+
+    <div class="controls">
+      <button id="prev" aria-label="上一首"><span class="tri left"></span></button>
+      <button id="playpause" aria-label="播放 / 暫停"><span class="pp play" id="ppIcon"></span></button>
+      <button id="next" aria-label="下一首"><span class="tri right"></span></button>
+    </div>
+
+    <section class="platforms">
+      <div class="marquee">
+        <div class="marquee-track" id="marquee"></div>
+      </div>
+    </section>
+  </main>
+
+<script>
+  // ------- 你的單曲：換成自己的封面與資訊即可 -------
+  const covers = [
+    { img: "/covers/cover-1.png", title: "We Share（這份自在）", sub: "City Pop · Single" },
+    { img: "/covers/cover-2.png", title: "Born Digital",        sub: "part code, part soul" },
+    { img: "/covers/cover-3.png", title: "Sunset Drive",        sub: "City Pop · Single" },
+    { img: "/covers/cover-4.png", title: "Midnight Tape",       sub: "Lo-Fi · Single" },
+    { img: "/covers/cover-5.png", title: "Dreamwalker",         sub: "Dream Pop · Single" },
+  ];
+
+  const LINKTREE = "https://linktr.ee/chentasticzone";
+
+  // 平台清單。logo 為官方 SVG（來自 theSVG.org）。
+  //  - hasText:true  → 該 SVG 已含品牌文字（icon+字），不再另外加文字
+  //  - hasText:false → 只有官方 icon，另配文字
+  //  - logo:null     → 無官方 SVG（街聲 / 汽水音樂 / 抖音），用純文字 logo
+  // 之後可把每個 url 改成該平台你作品的直接連結。
+  const platforms = [
+    { name: "YouTube",       color: "#ff0000", url: LINKTREE, logo: "/logos/youtube.svg",       hasText: true },
+    { name: "YouTube Music", color: "#ff0000", url: LINKTREE, logo: "/logos/youtube-music.svg", hasText: true },
+    { name: "bilibili",      color: "#00A1D6", url: LINKTREE, logo: "/logos/bilibili.svg",      hasText: false },
+    { name: "SoundCloud",    color: "#ff5500", url: LINKTREE, logo: "/logos/soundcloud.svg",    hasText: true },
+    { name: "StreetVoice",   color: "#fc4d0b", url: LINKTREE, logo: null,                       hasText: false },
+    { name: "汽水音樂",       color: "#fe2c55", url: LINKTREE, logo: null,                       hasText: false },
+    { name: "Genius",        color: "#ffff64", url: LINKTREE, logo: "/logos/genius.svg",        hasText: false },
+    { name: "抖音",           color: "#000000", url: LINKTREE, logo: null,                       hasText: false },
+  ];
+
+  // ------- 建立封面卡片 -------
+  const track = document.getElementById("track");
+  covers.forEach((c, i) => {
+    const el = document.createElement("div");
+    el.className = "card";
+    el.innerHTML = '<img src="' + c.img + '" alt="' + c.title + ' 封面" crossorigin="anonymous">';
+    el.addEventListener("click", () => { setActive(i); stopAuto(); });
+    track.appendChild(el);
+  });
+  const cards = Array.from(track.children);
+
+  const GAP = 240;      // 卡片之間的水平間距
+  const SIDE_SCALE = .78;
+  let active = 0;       // 一進頁面就是第一個（最左邊）在正中間
+
+  function setActive(i) {
+    active = Math.max(0, Math.min(covers.length - 1, i));
+    layout();
+    document.getElementById("np-title").textContent = covers[active].title;
+    document.getElementById("np-sub").textContent = covers[active].sub;
+  }
+
+  function layout() {
+    cards.forEach((card, i) => {
+      const offset = i - active;
+      const abs = Math.abs(offset);
+      const x = offset * GAP;
+      const scale = offset === 0 ? 1 : Math.max(.55, SIDE_SCALE - (abs - 1) * .08);
+      const rotate = offset === 0 ? 0 : (offset < 0 ? 32 : -32);
+      const z = -abs * 120;
+      card.style.transform =
+        "translateX(" + x + "px) translateZ(" + z + "px) rotateY(" + rotate + "deg) scale(" + scale + ")";
+      card.style.zIndex = String(100 - abs);
+      card.style.opacity = abs > 3 ? "0" : "1";
+      card.style.filter = offset === 0 ? "none" : "brightness(.82)";
+      card.classList.toggle("active", offset === 0);
+    });
+  }
+
+  document.getElementById("prev").addEventListener("click", () => { setActive(active - 1); stopAuto(); });
+  document.getElementById("next").addEventListener("click", () => { setActive(active + 1); stopAuto(); });
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft")  { setActive(active - 1); stopAuto(); }
+    if (e.key === "ArrowRight") { setActive(active + 1); stopAuto(); }
+  });
+
+  // ------- 播放 / 暫停：自動輪播封面 -------
+  const ppIcon = document.getElementById("ppIcon");
+  let timer = null;
+  function startAuto() {
+    if (timer) return;
+    ppIcon.className = "pp pause";
+    timer = setInterval(() => {
+      const next = (active + 1) % covers.length;   // 到最後一張循環回第一張
+      setActive(next);
+    }, 2500);
+  }
+  function stopAuto() {
+    if (!timer) return;
+    clearInterval(timer);
+    timer = null;
+    ppIcon.className = "pp play";
+  }
+  document.getElementById("playpause").addEventListener("click", () => {
+    timer ? stopAuto() : startAuto();
+  });
+
+  // ------- 平台跑馬燈（複製一份達成無縫循環） -------
+  const marquee = document.getElementById("marquee");
+  function makeBrand(p) {
+    const a = document.createElement("a");
+    a.className = "brand";
+    a.href = p.url;
+    a.target = "_blank";
+    a.rel = "noopener";
+    a.style.setProperty("--brand", p.color);
+    a.setAttribute("aria-label", p.name);
+    let html = "";
+    if (p.logo)  html += '<img src="' + p.logo + '" alt="' + p.name + '">';
+    if (!p.logo || !p.hasText) html += '<span class="name">' + p.name + '</span>';
+    a.innerHTML = html;
+    return a;
+  }
+  [...platforms, ...platforms].forEach(p => marquee.appendChild(makeBrand(p)));
+
+  setActive(0);
+</script>
 </body>
 </html>
