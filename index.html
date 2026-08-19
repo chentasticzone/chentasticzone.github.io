@@ -2,15 +2,14 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <!-- 方案 A：Meta 刷新跳轉 (最快，0秒延遲) -->
-    <meta http-equiv="refresh" content="0; url=/chen/">
+    <!-- 強制跳轉到 Netlify 的穩定入口 -->
+    <meta http-equiv="refresh" content="0; url=https://chentasticzone.netlify.app/chen/">
     <title>Redirecting to chen!...</title>
     <script>
-        // 方案 B：JS 跳轉 (雙重保險)
-        window.location.href = "/chen/";
+        window.location.replace("https://chentasticzone.netlify.app/chen/");
     </script>
 </head>
 <body>
-    <p>正在引導您進入 夢遊小陳 的賽博空間... <a href="/chen/">點此手動跳轉</a></p>
+    <p>正在引導您進入 夢遊小陳 的賽博空間... <a href="https://chentasticzone.netlify.app/chen/">點此手動跳轉</a></p>
 </body>
 </html>
