@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<!-- chen! | 夢遊小陳 — 繁體中文版正式檔（YouTube 內嵌） -->
-<html lang="zh-Hant"><head>
+<!-- chentasticzone.github.io — 簡體中文版正式檔（部署於 /chen/cn/） -->
+<!-- 簡體版預覽：B站內嵌。正式版將存為 index-sc.html -->
+<html lang="zh-CN"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>chen! ｜ 夢遊小陳</title>
-<link rel="icon" type="image/png" href="icon.png">
-<!-- 字型：Noto Sans TC（繁中＋拉丁）；載入失敗時自動退回系統字體，版面不會壞 -->
+<link rel="icon" type="image/png" href="../icon.png">
+<!-- 字型：Noto Sans SC（简中＋拉丁）；载入失败时自动退回系统字体，版面不会坏 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   @property --glow {
     syntax: "<color>";
@@ -72,7 +73,7 @@ var(--accent-2));
     align-items: center;
     justify-content: center;
     perspective: 1400px;
-    margin-top: -15px; /* LOGO↔圖片視覺間距砍到約65%：原 3px＋header下緣2px，改為負距把整個舞台往上拉 */ /* LOGO↔圖片留白減半：header下緣4px＋這裡4px＝總計8px */
+    margin-top: -15px; /* LOGO↔图片视觉间距砍到约65%：原 3px＋header下缘2px，改为负距把整个舞台往上拉 */ /* LOGO↔图片留白减半：header下缘4px＋这里4px＝总计8px */
     touch-action: pan-y; /* 手機：垂直捲動保留，水平滑動給畫廊拖曳用 */
   }
   /* soft light-orange glow that only lives around the artwork */
@@ -105,7 +106,7 @@ var(--accent-2));
     left: 0;
     width: var(--card-w);
     height: var(--card-h);
-    border-radius: 9px; /* 圓角＝13px×0.67；實際形狀由 squircle clip 決定 */
+    border-radius: 9px; /* 圆角＝13px×0.67；实际形状由 squircle clip 决定 */
     overflow: hidden;
     cursor: pointer;
     transition: transform 1.1s cubic-bezier(.5,0,0,1), opacity .9s, filter .9s;
@@ -118,7 +119,7 @@ var(--accent-2));
     inset: 0;
     overflow: hidden;
     border-radius: 9px;
-    clip-path: url(#squircle); /* Apple 式連續倒角（套在裁切層，隨卡片尺寸、不變形） */
+    clip-path: url(#squircle); /* Apple 式连续倒角（套在裁切层，随卡片尺寸、不变形） */
     pointer-events: none;
   }
   .card img {
@@ -130,18 +131,33 @@ var(--accent-2));
     -webkit-user-drag: none;
     user-select: none;
   }
+  /* 中央图片上的半透明播放键（圆角三角、纯指示用；点击穿透到卡片＝播放） */
+  .playglyph {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    opacity: 0;
+    transition: opacity .35s;
+    pointer-events: none;
+    z-index: 3;
+  }
+  .card.active .playglyph { opacity: 1; }
+  .card.active.live .playglyph { opacity: 0; }
+  .playglyph svg { filter: drop-shadow(0 2px 10px rgba(60,30,10,.28)); animation: breathe 1.875s ease-in-out infinite; }
+@keyframes breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.091); } }
   .card::after {
     content: "";
     position: absolute;
     inset: 0;
-    border-radius: 9px; /* 圓角＝13px×0.67；實際形狀由 squircle clip 決定 */
+    border-radius: 9px; /* 圆角＝13px×0.67；实际形状由 squircle clip 决定 */
     box-shadow: inset 0 0 0 1px rgba(0,0,0,.06);
     pointer-events: none;
   }
   .card.active {
     box-shadow: 0 14px 30px rgba(255,138,43,.20), 0 5px 14px rgba(120,70,20,.12);
   }
-  /* 播放器：16:9，上下邊貼齊圖片上下邊（寬度＝高×16/9，比圖片略寬；小螢幕自動限寬不超出） */
+  /* 播放器：16:9，上下边贴齐图片上下边（宽度＝高×16/9，比图片略宽；小萤幕自动限宽不超出） */
   .vid {
     position: absolute;
     left: 50%;
@@ -163,24 +179,8 @@ var(--accent-2));
     display: block;
     pointer-events: auto;
   }
-  /* 換曲不銷毀：離開的播放器暫停＋隱藏（進度保留），點回來自動接著播 */
+  /* 換曲＝停掉舊的、建立新的（B站無遠端控制） */
   .vid.off { display: none; }
-
-  /* 中央圖片上的半透明播放鍵（圓角三角、純指示用；點擊穿透到卡片＝播放） */
-  .playglyph {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-items: center;
-    opacity: 0;
-    transition: opacity .35s;
-    pointer-events: none;
-    z-index: 3;
-  }
-  .card.active .playglyph { opacity: 1; }
-  .card.active.live .playglyph { opacity: 0; }
-  .playglyph svg { filter: drop-shadow(0 2px 10px rgba(60,30,10,.28)); animation: breathe 1.875s ease-in-out infinite; }
-@keyframes breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.091); } }
 
   /* ---------- Now playing info ---------- */
   .meta {
@@ -189,15 +189,15 @@ var(--accent-2));
     justify-content: center;
     gap: calc(20 * var(--u));
     margin-top: 4px;
-    min-height: clamp(36px, 3.13vw, 52px); /* 隨視窗等比：1280px 時 40px */
-    font-family: "Noto Sans TC", "Noto Sans", "Segoe UI", "Microsoft JhengHei", "PingFang TC", system-ui, sans-serif;
-    cursor: pointer;              /* 整個標題區塊＝播放／暫停 */
+    min-height: clamp(36px, 3.13vw, 52px); /* 随视窗等比：1280px 时 40px */
+    font-family: "Noto Sans SC", "Noto Sans", "Segoe UI", "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+    cursor: pointer;              /* 整个标题区块＝播放／停止 */
     -webkit-user-select: none;
     user-select: none;
   }
   .meta .mid { text-align: center; min-width: 0; }
   .meta .title { font-size: clamp(13px, 1.328vw, 20px); font-weight: 700; color: var(--logo-gray); transition: color .2s; }
-      .meta:hover .title { color: #111; } /* 主標題＝LOGO 深灰（原本繼承近黑）；1280px 時 17px */
+      .meta:hover .title { color: #111; } /* 主标题＝LOGO 深灰（原本继承近黑）；1280px 时 17px */
   .meta.swap .title, .meta.swap .sub { animation: metaIn 1.1s cubic-bezier(.5,0,0,1) both; }
   .meta.swap .sub { animation-delay: .07s; }
   @keyframes metaIn {
@@ -205,7 +205,7 @@ var(--accent-2));
     to   { transform: translateX(0); opacity: 1; }
   }
   .meta .sub { color: var(--muted); font-size: clamp(9px, .94vw, 14px); margin-top: calc(3 * var(--u)); letter-spacing: .04em; transition: color .2s; }
-  .meta .mid:hover .sub { color: #d4b168; } /* 標題區 hover：副標也變假金色 */ /* 隨視窗等比：1280px 時 12px */
+  .meta .mid:hover .sub { color: #d4b168; } /* 标题区 hover：副标也变假金色 */ /* 隨視窗等比：1280px 時 12px */
 
   /* ---------- Controls ---------- */
   /* 左右長箭頭（在標題兩側）＋點擊回饋 */
@@ -214,7 +214,7 @@ var(--accent-2));
     border: 0;
     padding: calc(10 * var(--u));
     cursor: pointer;
-    color: var(--muted); /* 與副標題同色 */
+    color: var(--muted); /* 与副标题同色 */
     display: grid;
     place-items: center;
     transition: color .2s, transform .1s;
@@ -293,7 +293,7 @@ var(--accent-2));
 
   <header>
         <a href="./index.html" class="logo-link">
-      <img src="icon.png" alt="chen!" class="logo-img">
+      <img src="../icon.png" alt="chen!" class="logo-img">
     </a>
 <script>(function(){var a=document.querySelector(".logo-link");if(!a)return;var p=location.pathname,d=p.replace(/[^/]*$/,""),s=p.split("/").pop(),own=(s&&/\.html?$/.test(s))?s:"index.html";if(d==="")d="/";a.setAttribute("href",d+own)})();</script>
 
@@ -304,13 +304,13 @@ var(--accent-2));
       <div class="track" id="track"></div>
     </section>
 
-    <div class="meta" id="np-toggle" role="button" tabindex="0" aria-label="播放 / 暫停">
+    <div class="meta" id="np-toggle" role="button" tabindex="0" aria-label="播放 / 停止">
       <button id="prev" aria-label="上一首">
         <svg class="arrow" viewBox="0 0 25 12" fill="none" aria-hidden="true"><path d="M24 6 H2 M5.9 2.1 L2 6 L5.9 9.9" stroke="currentColor" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <div class="mid">
-        <div class="title" id="np-title">雨的節奏.funk</div>
-        <div class="sub" id="np-sub">chen! | 夢遊小陳</div>
+        <div class="title" id="np-title">雨的节奏.funk</div>
+        <div class="sub" id="np-sub">梦游小陈 | chen!</div>
       </div>
       <button id="next" aria-label="下一首">
         <svg class="arrow" viewBox="0 0 25 12" fill="none" aria-hidden="true"><path d="M1 6 H23 M19.1 2.1 L23 6 L19.1 9.9" stroke="currentColor" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -325,26 +325,26 @@ var(--accent-2));
   </main>
 
 <script>
-  // ------- 進站語言建議：頁內議：頁內橫幅（膠囊同款半透明設計、圖片同款倒角），每次工作階段出現一次 -------
+  // ------- 进站语言建议：页内横幅（胶囊同款半透明设计、图片同款倒角），每次工作阶段出现一次 -------
   (function () {
     try {
-      const forceEarly = (/forcemsg=(sc|tc)/i.exec(location.search) || [])[1]; // 測試參數：不受「每個工作階段只問一次」限制
+      const forceEarly = (/forcemsg=(sc|tc)/i.exec(location.search) || [])[1]; // 测试参数：不受「每个工作阶段只问一次」限制
       if (!forceEarly && sessionStorage.getItem("langAsked")) return;
       const simp = /^(zh-cn|zh-sg|zh-hans)(-|$)/i.test((navigator.language || "").trim());
       const onSimp = document.documentElement.lang === "zh-CN";
-      // force 變數已在上方宣告（forceEarly）
+      // force 变数已在上方宣告（forceEarly）
       const goSimp = (!onSimp && simp) || (!onSimp && forceEarly === "sc");   // 繁體頁 × 簡中瀏覽器 → 邀請前往簡體版
       const goTrad = (onSimp && !simp) || (onSimp && forceEarly === "tc");   // 簡體頁 × 繁中瀏覽器 → 邀請前往繁體版
       if (!goSimp && !goTrad) return;
       sessionStorage.setItem("langAsked", "1");
-      // 倒角「真的一樣大」：squircle 是比例制定義，小元件上角落會小到看不見；改用與圖片相同的「像素倒角」
-      // 倒角「真的一樣大」：不引用任何腳本變數（cards 是後面宣告的 const、此處還在 TDZ 會招錯），依視窗寬換算卡片實際寬（clamp(340px,31.25vw,600px)，手機 300px）
+      // 倒角「真的一样大」：squircle 是比例制定义，小元件上角落会小到看不见；改用与图片相同的「像素倒角」
+      // 倒角「真的一样大」：不引用任何脚本变量（cards 是后面声明的 const、此处还在 TDZ 会招错），依视窗宽换算卡片实际宽（clamp(340px,31.25vw,600px)，手机 300px）
       const cw0 = window.innerWidth <= 640 ? 300 : Math.min(600, Math.max(340, window.innerWidth * .3125));
-      const r = Math.max(6, Math.round(9 * cw0 / 400)); // 基準：400px 寬卡片的實際倒角約 9px，隨實際卡寬等比
-      const wrap = document.createElement("div"); // 外層只負責陰影：box-shadow 不被 clip 剪掉、也不貼著形狀「框住」
+      const r = Math.max(6, Math.round(9 * cw0 / 400)); // 基准：400px 宽卡片的实际倒角约 9px，随实际卡宽等比
+      const wrap = document.createElement("div"); // 外层只负责阴影：box-shadow 不被 clip 剪掉、也不贴着形状「框住」
       wrap.style.cssText = "position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:60;" +
         "border-radius:" + r + "px;box-shadow:0 10px 26px rgba(60,30,10,.16);transition:box-shadow .2s;";
-      const bar = document.createElement("div"); // 內層：非常淺的半透明淺黃底＋與圖片相同像素的倒角；不加 backdrop-blur（不模糊底下內容）
+      const bar = document.createElement("div"); // 内层：非常浅的半透明浅黄底＋与图片相同像素的倒角；不加 backdrop-blur（不模糊底下内容）
       bar.style.cssText =
         "display:flex;align-items:center;padding:12px 12px 12px 22px;" +
         "font-size:13px;font-weight:500;color:var(--logo-gray);letter-spacing:.02em;" +
@@ -356,19 +356,19 @@ var(--accent-2));
       msg.textContent = goSimp ? "进入简中 ChentasticZone？" : "進入繁中 ChentasticZone？";
       msg.style.fontFamily = goSimp ? "'Noto Sans SC',sans-serif" : "'Noto Sans TC',sans-serif";
       msg.style.cursor = "pointer";
-      const go = () => { location.href = goSimp ? "cn/" : "index.html"; }; // 正式版改 index-sc.html / index.html
+      const go = () => { location.href = goSimp ? "index.html" : "../"; }; // 正式版改 index-sc.html / index.html
       msg.addEventListener("click", go);
-      const goldIn = (el, c = "#d4b168") => { el.addEventListener("mouseenter", () => el.style.color = c); el.addEventListener("mouseleave", () => el.style.color = ""); }; // hover 變色（預設淡金，叉叉傳紅）
-      const ok = document.createElement("span"); // 勾勾：純線條幾何 SVG
+      const goldIn = (el, c = "#d4b168") => { el.addEventListener("mouseenter", () => el.style.color = c); el.addEventListener("mouseleave", () => el.style.color = ""); }; // hover 变色（预设淡金，叉叉传红）
+      const ok = document.createElement("span"); // 勾勾：纯线条几何 SVG
       ok.innerHTML = '<svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M1.5 6.6 L4.8 9.9 L10.5 2.1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
       ok.style.cssText = "margin-left:14px;padding:4px 8px;color:var(--muted);cursor:pointer;display:inline-flex;";
-      // 勾勾的 hover 與點擊改由下方 ask 統一處理
-      const x = document.createElement("span"); // 叉叉：改為與勾勾同款 SVG 線線條（粗細、圓角一致）
+      // 勾勾的 hover 与点击改由下方 ask 统一处理
+      const x = document.createElement("span"); // 叉叉：改为与勾勾同款 SVG 线条（粗细、圆角一致）
       x.innerHTML = '<svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2.1 2.1 L9.9 9.9 M9.9 2.1 L2.1 9.9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
       x.style.cssText = "margin-left:10px;padding:4px 8px;color:var(--muted);cursor:pointer;display:inline-flex;";
       x.addEventListener("click", () => wrap.remove());
-      goldIn(x, "#d46868"); // 叉叉 hover 紅（與假金同明度同飽和度）
-      const ask = document.createElement("span"); // 句子＋勾勾一組：滑鼠在任一上面，句子變黑、勾勾變金；點任一都跳轉
+      goldIn(x, "#d46868"); // 叉叉 hover 红（与假金同明度同饱和度）
+      const ask = document.createElement("span"); // 句子＋勾勾一组：鼠标在任一上面，句子变黑、勾勾变金；点任一都跳转
       ask.style.cssText = "display:inline-flex;align-items:center;";
       ask.appendChild(msg);
       ask.appendChild(ok);
@@ -385,11 +385,11 @@ var(--accent-2));
   // 5 支官方影片（新→舊）；縮圖抓 maxresdefault，沒有自動退 mqdefault
   // 之後想放任何比例的圖都可以：img 用 contain 完整呈現，卡片一律不裁切
   const covers = [ /* 縮圖：本地已裁切 4:3 封面（covers/ 資料夾）；onerror 退 YT；bvid＝簡體版內嵌用 */
-    { img: "covers/youshine.jpg", title: "你的燦爛 (You Shine)",   tint: "#f2c14e", ytId: "htdrIVp0toM", bvid: "BV16E8q6SEoV" },
-    { img: "covers/rain-funk.jpg", title: "雨的節奏.funk",       tint: "#6a8fd8", ytId: "bDFn-ODguzs", bvid: "BV1GggG6nEok" },
-    { img: "covers/big-question.jpg", title: "（？）很大",          tint: "#9B89C5", ytId: "GwIY0M_RZak", bvid: "BV1TJGw6HEd1" },
-    { img: "covers/starfire.jpg", title: "閃燃 / Starfire",     tint: "#ff7a59", ytId: "LlEY5lRZiiU", bvid: "BV1WmgC6xEKy" },
-    { img: "covers/we-share.jpg", title: "We Share（這份自在）", tint: "#ff8a2b", ytId: "rz4TP9IM3uw", bvid: "BV1TNNq6AEke" },
+    { img: "../covers/youshine.jpg", title: "你的灿烂 (You Shine)",   tint: "#f2c14e", ytId: "htdrIVp0toM", bvid: "BV16E8q6SEoV" },
+    { img: "../covers/rain-funk.jpg", title: "雨的节奏.funk",       tint: "#6a8fd8", ytId: "bDFn-ODguzs", bvid: "BV1GggG6nEok" },
+    { img: "../covers/big-question.jpg", title: "（？）很大",          tint: "#9B89C5", ytId: "GwIY0M_RZak", bvid: "BV1TJGw6HEd1" },
+    { img: "../covers/starfire.jpg", title: "闪燃 / Starfire",     tint: "#ff7a59", ytId: "LlEY5lRZiiU", bvid: "BV1WmgC6xEKy" },
+    { img: "../covers/we-share.jpg", title: "We Share（这份自在）", tint: "#ff8a2b", ytId: "rz4TP9IM3uw", bvid: "BV1TNNq6AEke" },
   ];
 
   const LINKTREE = "https://linktr.ee/chentasticzone";
@@ -480,11 +480,8 @@ var(--accent-2));
       if (galleryDragged) { galleryDragged = false; return; } // 拖曳剛結束＝不算點擊
       // 點任何封面＝直接開始播放；點正在播放的中央卡片＝暫停／續播
       if (i === active && playingIdx === i) {
-        const resume = el.dataset.paused === "1";
-        ytCommand(resume ? "playVideo" : "pauseVideo");
-        const hst = hosts[i];
-        if (hst) hst.classList.toggle("off", !resume);
-        el.dataset.paused = resume ? "0" : "1";
+        hosts[i].remove(); delete hosts[i]; // B站版：無法遠端暫停 → 直接停掉
+        playingIdx = -1;
         updateGlyphs();
         return;
       }
@@ -584,7 +581,7 @@ var(--accent-2));
   let rT; /* 視窗大小/縮放改變 → 重算間距、景深與位置 */
   window.addEventListener("resize", () => { clearTimeout(rT); rT = setTimeout(layout, 150); });
 
-  // 播放鍵浮層同步：卡片上有「可見播放器」＝live（隱藏浮層）
+  // 播放键浮层同步：卡片上有「可见播放器」＝live（隐藏浮层）
   function updateGlyphs() {
     cards.forEach((c, idx) => {
       const h = hosts[idx];
@@ -592,16 +589,16 @@ var(--accent-2));
     });
   }
 
-  // ------- 標題區塊＝播放／暫停（取代原本的中間按鈕） -------
+  // ------- 標題區塊＝播放／停止（取代原本的中間按鈕；B站無遠端暫停） -------
   const metaBtn = document.getElementById("np-toggle");
   const togglePlay = () => {
     if (playingIdx === -1) { playTrack(active); return; }
-    const card = cards[playingIdx];
     const host = hosts[playingIdx];
-    const resume = card.dataset.paused === "1";
-    ytCommand(resume ? "playVideo" : "pauseVideo");
-    if (host) host.classList.toggle("off", !resume); // 暫停＝同時隱藏播放器；續播＝再顯示
-    card.dataset.paused = resume ? "0" : "1";
+    if (host) { // 停掉前記下進度；再點同一張卡會從這裡附近續播
+      if (playStart[playingIdx]) resumeAt[playingIdx] = (Date.now() - playStart[playingIdx]) / 1000;
+      host.remove(); delete hosts[playingIdx];
+    } // B站版：暫停＝停掉
+    playingIdx = -1;
     updateGlyphs();
   };
   metaBtn.addEventListener("click", togglePlay);
@@ -613,7 +610,7 @@ var(--accent-2));
   (function () {
     const SIMP = document.documentElement.lang === "zh-CN"; // 簡體版？
     const a = document.createElement("a");
-    a.href = SIMP ? "index.html" : "cn/"; // 正式版改 index.html / index-sc.html
+    a.href = SIMP ? "index.html" : "../"; // 正式版改 index.html / index-sc.html
     // 與 LOGO 垂直置中：header 上緣留白10px＋LOGO 高63px → 中心約 41px；膠囊高約30px → top ≈ 26px
     a.style.cssText = "position:fixed;top:26px;right:18px;z-index:50;display:flex;align-items:center;line-height:1;" +
       "font-family:'Noto Sans TC','Noto Sans SC','Noto Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:.08em;" +
@@ -626,7 +623,7 @@ var(--accent-2));
     const onT = 'style="' + fTrad + 'color:var(--logo-gray);text-decoration:underline;text-underline-offset:3px;"';
     const offS = 'style="' + fSimp + 'color:var(--muted);"';
     const offT = 'style="' + fTrad + 'color:var(--muted);"';
-    const sep = '<span style="color:var(--muted);margin:0;">｜</span>'; /* 全形豎線自帶視覺空隙，不再另加間距 */
+    const sep = '<span style="color:var(--muted);margin:0;">｜</span>'; /* 全形竖线自带视觉空隙，不再另加间距 */
     a.innerHTML = SIMP
       ? "<span " + onS + ">简</span>" + sep + "<span " + offT + ">繁</span>"
       : "<span " + offS + ">简</span>" + sep + "<span " + onT + ">繁</span>";
@@ -732,58 +729,46 @@ var(--accent-2));
   // 對策：本機用「完全乾淨」的 embed 網址；正式網站（http/https）才加 enablejsapi＋正確 origin。
   // 換曲不銷毀播放器：舊的暫停＋隱藏（進度保留），點回來自動接著播。
   var playingIdx = -1;  // 正在播放的曲目（-1 = 沒在播）
-  var hosts = {};       // 每首歌一個 .vid 容器：換曲只暫停＋隱藏，進度保留
+  var hosts = {};       // 每首歌一個 .vid 容器
   const stageEl = document.querySelector(".stage"); // 彈出式播放器的容器＋騰位對象
   // 關鍵：enablejsapi 會啟動 origin 驗證，file:// 的 origin 是 null → 錯誤 153。
   const onWeb = location.protocol === "http:" || location.protocol === "https:";
   const apiParam = onWeb ? "&enablejsapi=1&origin=" + encodeURIComponent(location.origin) : "";
 
+  // 近似续播：B站无法读取播放进度，改用计时器记录「这首已播几秒」，回来时带入 t=
+  const playStart = {};   // 每首歌开始播放的时间戳
+  const resumeAt = {};    // 离开时记下的秒数（下次回来从这里附近续播）
   function buildHost(i) {
+    const tSec = resumeAt[i] > 1 ? Math.floor(resumeAt[i]) : 1; // t=0 会被 B站忽略（视同未设定→触发帐号续播），最少设 1
     const host = document.createElement("div");
     host.className = "vid";
     host.innerHTML =
-      '<iframe src="https://www.youtube.com/embed/' + covers[i].ytId +
-      '?autoplay=1&playsinline=1&rel=0' + apiParam + '" ' +
-      'allow="autoplay; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>';
+      '<iframe src="https://player.bilibili.com/player.html?bvid=' + covers[i].bvid +
+      '&autoplay=1&high_quality=1&danmaku=0&t=' + tSec + '" ' +
+      'allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+    playStart[i] = Date.now();
     stageEl.appendChild(host);   // 掛在 stage 層＝浮在當前圖片正上方，不進卡片裁切
     return host;
   }
 
   function playTrack(i) {
     setActive(i);
-    // 舊影片：暫停＋隱藏（http/https 進度保留；file:// 沒有 jsapi，重設 src 避免背景幽靈播音）
-    if (playingIdx !== -1 && playingIdx !== i && hosts[playingIdx]) {
-      const old = hosts[playingIdx];
-      if (onWeb) ytCommand("pauseVideo", old);
-      else { const f = old.querySelector("iframe"); if (f) f.src = "about:blank"; }
-      old.classList.add("off");
+    // B站內嵌沒有遠端指令 API：換曲＝移除舊 iframe、建立新的（從頭播）
+    if (playingIdx !== -1 && playingIdx !== i) {
+      if (hosts[playingIdx]) { // 換曲前：用計時器記下這首播到第幾秒（誤差＝你在 iframe 裡手動暫停的時間也會被算進去）
+        if (playStart[playingIdx]) resumeAt[playingIdx] = (Date.now() - playStart[playingIdx]) / 1000;
+        hosts[playingIdx].remove();
+        delete hosts[playingIdx];
+      }
       cards[playingIdx].dataset.paused = "0";
+    } else {
+      resumeAt[i] = 0; // 重播同一首＝真的從頭
     }
     playingIdx = i;
     cards[i].dataset.paused = "0";
-    if (!hosts[i]) {
-      hosts[i] = buildHost(i);          // 第一次點：autoplay 直接開始播
-    } else {
-      hosts[i].classList.remove("off"); // 點回來：顯示＋自動接著播
-      if (onWeb) {
-        ytCommand("playVideo", hosts[i]);
-      } else {
-        const f = hosts[i].querySelector("iframe");
-        if (f && f.getAttribute("src") === "about:blank") {
-          f.src = "https://www.youtube.com/embed/" + covers[i].ytId + "?autoplay=1&playsinline=1&rel=0";
-        }
-      }
-    }
+    if (hosts[i]) { hosts[i].remove(); delete hosts[i]; } // 重播同一首也重建
+    hosts[i] = buildHost(i);            // 點擊觸發，autoplay 參數直接開播
     updateGlyphs();
-  }
-
-  // 對某個 .vid 裡的 iframe 下指令（host 省略＝目前正在播的）
-  function ytCommand(func, host) {
-    const f = (host || hosts[playingIdx]);
-    const iframe = f && f.querySelector("iframe");
-    if (iframe && iframe.contentWindow) {
-      iframe.contentWindow.postMessage(JSON.stringify({ event: "command", func: func, args: [] }), "*");
-    }
   }
 </script>
 
