@@ -689,6 +689,14 @@ var(--accent-2));
     for (let i = 0; i < need * 2; i++) visible.forEach(p => frag.appendChild(makeBrand(p)));
     marquee.appendChild(frag);
     halfW = groupW * need;
+    // 汽水音符漸層複寫：每個 .qn 疊一層 .qng（官方漸層），靠 opacity 交叉淡化；
+    // 放在 buildMarquee 內＝resize 重建後也會重新補上，hover 不會再掉回灰色
+    marquee.querySelectorAll(".qn").forEach((n) => {
+      const c = n.cloneNode(false);
+      c.classList.remove("qn"); c.classList.add("qng");
+      c.setAttribute("fill", "url(#paint0_linear_3409_38666)");
+      n.after(c);
+    });
   }
   buildMarquee();
   let resizeTimer = null;
@@ -734,13 +742,6 @@ var(--accent-2));
     }
     requestAnimationFrame(tick);
   }
-  // 汽水音符漸層複本：每個 .qn 疊一層 .qng（官方漸層），靠 opacity 交叉淡化
-  document.querySelectorAll(".brand .qn").forEach((n) => {
-    const c = n.cloneNode(false);
-    c.classList.remove("qn"); c.classList.add("qng");
-    c.setAttribute("fill", "url(#paint0_linear_3409_38666)");
-    n.after(c);
-  });
 
   requestAnimationFrame(tick);
 
@@ -789,12 +790,12 @@ var(--accent-2));
   const playStart = {};   // 每首歌开始播放的时间戳
   const resumeAt = {};    // 离开时记下的秒数（下次回来从这里附近续播）
   function buildHost(i) {
-    const tSec = resumeAt[i] > 1 ? Math.floor(resumeAt[i]) : 1; // t=0 会被 B站忽略（视同未设定→触发帐号续播），最少设 1
+    const tSec = resumeAt[i] > 1 ? Math.floor(resumeAt[i]) : 0; // 只有「續播超過 1 秒」才帶 t＝近似接續；首播不帶 t＝B 站從 0000 開始
     const host = document.createElement("div");
     host.className = "vid";
     host.innerHTML =
       '<iframe src="https://player.bilibili.com/player.html?bvid=' + covers[i].bvid +
-      '&autoplay=1&high_quality=1&danmaku=0&t=' + tSec + '" ' +
+      '&autoplay=1&high_quality=1&danmaku=0' + (tSec ? '&t=' + tSec : '') + '" ' +
       'allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
     playStart[i] = Date.now();
     ["l", "r"].forEach(function (s) { // B 方案熱區：左右拖曳＝滑畫廊（中央保留 iframe 原生控制）
