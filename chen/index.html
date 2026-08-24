@@ -692,6 +692,14 @@ var(--accent-2));
     for (let i = 0; i < need * 2; i++) visible.forEach(p => frag.appendChild(makeBrand(p)));
     marquee.appendChild(frag);
     halfW = groupW * need;
+    // 汽水音符漸層複寫：每個 .qn 疊一層 .qng（官方漸層），靠 opacity 交叉淡化；
+    // 放在 buildMarquee 內＝resize 重建後也會重新補上，hover 不會再掉回灰色
+    marquee.querySelectorAll(".qn").forEach((n) => {
+      const c = n.cloneNode(false);
+      c.classList.remove("qn"); c.classList.add("qng");
+      c.setAttribute("fill", "url(#paint0_linear_3409_38666)");
+      n.after(c);
+    });
   }
   buildMarquee();
   let resizeTimer = null;
@@ -737,13 +745,6 @@ var(--accent-2));
     }
     requestAnimationFrame(tick);
   }
-  // 汽水音符漸層複本：每個 .qn 疊一層 .qng（官方漸層），靠 opacity 交叉淡化
-  document.querySelectorAll(".brand .qn").forEach((n) => {
-    const c = n.cloneNode(false);
-    c.classList.remove("qn"); c.classList.add("qng");
-    c.setAttribute("fill", "url(#paint0_linear_3409_38666)");
-    n.after(c);
-  });
 
   requestAnimationFrame(tick);
 
