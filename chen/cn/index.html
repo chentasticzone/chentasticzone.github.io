@@ -272,15 +272,24 @@ var(--accent-2));
   .brand:hover { color: var(--brand); }
   .brand:hover .m  { fill: var(--brand); }
   .brand:hover .m2 { fill: var(--brand2, var(--brand)); }
-  .brand:hover .qn { fill: url(#paint0_linear_3409_38666); } /* hover 恢復官方漸層 */
   .brand:hover .a  { opacity: 1; }
   /* 經過頁面中線：淡入成 hover 配色，過了再淡出（JS 依位置加 .centered） */
-  .brand, .brand .m, .brand .m2, .brand .qn, .brand .a { transition: fill 2s ease, color 2s ease, opacity 2s ease; } /* 實驗：2s 慢淡入淡出（原 .88s） */
+  /* 速度分工：hover 一律走上方 .3s 快速；只有中線進出走 2s 慢速
+     （進入＝.centered 覆蓋時長；離開＝JS 加 .slowmo 維持 2s，2.1s 後自動拆除還給快速） */
+  .brand.centered:not(:hover), .brand.centered:not(:hover) .m,
+  .brand.centered:not(:hover) .m2, .brand.centered:not(:hover) .qn,
+  .brand.centered:not(:hover) .a, .brand.centered:not(:hover) .qng,
+  .brand.slowmo:not(:hover), .brand.slowmo:not(:hover) .m,
+  .brand.slowmo:not(:hover) .m2, .brand.slowmo:not(:hover) .qn,
+  .brand.slowmo:not(:hover) .a, .brand.slowmo:not(:hover) .qng { transition-duration: 2s; }
   .brand.centered { color: var(--brand); }
   .brand.centered .m  { fill: var(--brand); }
   .brand.centered .m2 { fill: var(--brand2, var(--brand)); }
-  .brand.centered .qn { fill: url(#paint0_linear_3409_38666); }
   .brand.centered .a  { opacity: 1; }
+  /* 汽水音符汽水音符漸層：疊一層漸層複本 .qng 以 opacity 交叉淡化（fill 顏色↔url() 無法插值、會瞬跳，opacity 可以） */
+  .brand .qng { opacity: 0; transition: opacity .3s ease; }
+  .brand:hover .qng { opacity: 1; }
+  .brand.centered .qng { opacity: 1; }
 
   @media (min-width: 1600px) { /* 寬螢幕：跑馬燈 logo 微幅放大，維持構圖比例 */
     .brand svg { height: calc(var(--h, 18px) * 1.22); }
@@ -300,7 +309,7 @@ var(--accent-2));
 
   <header>
         <a href="./index.html" class="logo-link">
-      <img src="icon.png" alt="chen!" class="logo-img">
+      <img src="../icon.png" alt="chen!" class="logo-img">
     </a>
 <script>(function(){var a=document.querySelector(".logo-link");if(!a)return;var p=location.pathname,d=p.replace(/[^/]*$/,""),s=p.split("/").pop(),own=(s&&/\.html?$/.test(s))?s:"index.html";if(d==="")d="/";a.setAttribute("href",d+own)})();</script>
 
@@ -708,10 +717,25 @@ var(--accent-2));
       const r = marquee.children[i].getBoundingClientRect();
       if (mid >= r.left && mid <= r.right) lit = i;
     }
-    for (let i = 0; i < marquee.children.length; i++)
-      marquee.children[i].classList.toggle("centered", i === lit);
+    for (let i = 0; i < marquee.children.length; i++) {
+      const el = marquee.children[i], was = el.classList.contains("centered");
+      el.classList.toggle("centered", i === lit);
+      if (was && i !== lit) { // 離開中線：.slowmo 讓淡出也走 2s，計時拆除後 hover 恢復快速
+        el.classList.add("slowmo");
+        clearTimeout(el._smT);
+        el._smT = setTimeout(() => el.classList.remove("slowmo"), 2100);
+      }
+    }
     requestAnimationFrame(tick);
   }
+  // 汽水音符漸層複本：每個 .qn 疊一層 .qng（官方漸層），靠 opacity 交叉淡化
+  document.querySelectorAll(".brand .qn").forEach((n) => {
+    const c = n.cloneNode(false);
+    c.classList.remove("qn"); c.classList.add("qng");
+    c.setAttribute("fill", "url(#paint0_linear_3409_38666)");
+    n.after(c);
+  });
+
   requestAnimationFrame(tick);
 
   marquee.addEventListener("pointerdown", (e) => {
