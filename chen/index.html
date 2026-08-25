@@ -165,6 +165,7 @@ var(--accent-2));
   /* B 方案熱區：左右各 33.4% 寬、垂直 20%~79%（依使用者 16:9 示意圖，避開 YT 頂欄與底部控制列）。
      熱區承接左右拖曳＝滑畫廊；中央與上下留白＝iframe 原生互動（進度條、音量、全螢幕、跳轉）。 */
   .vid .hz { position: absolute; top: 20%; height: 59%; width: 33.4%; z-index: 4; touch-action: pan-y; }
+  .meta { touch-action: pan-y; -webkit-user-select: none; user-select: none; } /* 標題列整條可拖曳滑畫廊（點擊照舊） */
   .vid .hz.l { left: 0; }
   .vid .hz.r { right: 0; }
   /* 換曲不銷毀：離開的播放器暫停＋隱藏（進度保留），點回來自動接著播 */
@@ -565,7 +566,7 @@ var(--accent-2));
 
   function goStep(d) {
     const i = (active + d + N) % N;
-    if (playingIdx !== -1) playTrack(i); else setActive(i); // 播放中換曲 → 直接續播新曲
+    if (playingIdx !== -1 && cards[playingIdx].dataset.paused !== "1") playTrack(i); else setActive(i); // 播放中換曲＝續播新曲；暫停隱藏中＝純瀏覽封面
   }
   document.getElementById("prev").addEventListener("click", (e) => { e.stopPropagation(); goStep(-1); });
   document.getElementById("next").addEventListener("click", (e) => { e.stopPropagation(); goStep(1); });
@@ -580,12 +581,17 @@ var(--accent-2));
       track.style.transform = "translateX(" + follow.toFixed(2) + "px)";
       if (sx !== null) raf = requestAnimationFrame(followStep);
     };
-    st.addEventListener("pointerdown", (e) => {
-      // 熱區（播放器左右帶）也能起拖；播放器仍固定中央、不隨卡移動
+    const startGal = (e) => { // 舞台與標題列共用的起拖（熱區、播放器左右帶也走這）
       sx = e.clientX; dx = 0; follow = 0;
       cancelAnimationFrame(raf); raf = requestAnimationFrame(followStep);
       st.classList.add("dragging");
-    });
+    };
+    st.addEventListener("pointerdown", startGal);
+    const metaEl = document.querySelector(".meta"); // 標題列整條也能拖曳滑畫廊（位移<8px＝原點擊行為，不受影響）
+    metaEl.addEventListener("pointerdown", startGal);
+    metaEl.addEventListener("click", (e) => { // 拖曳後不吃點擊：避免放開在箭頭上誤觸
+      if (Math.abs(dx) > 8) { e.stopPropagation(); e.preventDefault(); dx = 0; }
+    }, true);
     window.addEventListener("pointermove", (e) => {
       if (sx !== null) dx = e.clientX - sx;
     });
@@ -621,7 +627,7 @@ var(--accent-2));
   // ------- 標題區塊＝播放／暫停（取代原本的中間按鈕） -------
   const metaBtn = document.querySelector(".meta .mid"); /* 播放/暫停＝中間文字塊；箭頭與兩側空白不誤觸 */
   const togglePlay = () => {
-    if (playingIdx === -1) { playTrack(active); return; }
+    if (playingIdx === -1 || (playingIdx !== active && cards[playingIdx].dataset.paused === "1")) { playTrack(active); return; } // 暫停中瀏覽到別張後按播放＝改播中央這張
     const card = cards[playingIdx];
     const host = hosts[playingIdx];
     const resume = card.dataset.paused === "1";
