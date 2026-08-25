@@ -181,6 +181,7 @@ var(--accent-2));
   /* B 方案熱區：左右各 33.4% 寬、垂直 20%~79%（依使用者 16:9 示意圖，避開 YT 頂欄與底部控制列）。
      熱區承接左右拖曳＝滑畫廊；中央與上下留白＝iframe 原生互動（進度條、音量、全螢幕、跳轉）。 */
   .vid .hz { position: absolute; top: 20%; height: 59%; width: 33.4%; z-index: 4; touch-action: pan-y; }
+  .meta { touch-action: pan-y; -webkit-user-select: none; user-select: none; } /* 標題列整條可拖曳滑畫廊（點擊照舊） */
   .vid .hz.l { left: 0; }
   .vid .hz.r { right: 0; }
   /* 換曲＝停掉舊的、建立新的（B站無遠端控制） */
@@ -577,12 +578,17 @@ var(--accent-2));
       track.style.transform = "translateX(" + follow.toFixed(2) + "px)";
       if (sx !== null) raf = requestAnimationFrame(followStep);
     };
-    st.addEventListener("pointerdown", (e) => {
-      // 熱區（播放器左右帶）也能起拖；播放器仍固定中央、不隨卡移動
+    const startGal = (e) => { // 舞台與標題列共用的起拖（熱區、播放器左右帶也走這）
       sx = e.clientX; dx = 0; follow = 0;
       cancelAnimationFrame(raf); raf = requestAnimationFrame(followStep);
       st.classList.add("dragging");
-    });
+    };
+    st.addEventListener("pointerdown", startGal);
+    const metaEl = document.querySelector(".meta"); // 標題列整條也能拖曳滑畫廊（位移<8px＝原點擊行為，不受影響）
+    metaEl.addEventListener("pointerdown", startGal);
+    metaEl.addEventListener("click", (e) => { // 拖曳後不吃點擊：避免放開在箭頭上誤觸
+      if (Math.abs(dx) > 8) { e.stopPropagation(); e.preventDefault(); dx = 0; }
+    }, true);
     window.addEventListener("pointermove", (e) => {
       if (sx !== null) dx = e.clientX - sx;
     });
@@ -790,12 +796,12 @@ var(--accent-2));
   const playStart = {};   // 每首歌开始播放的时间戳
   const resumeAt = {};    // 离开时记下的秒数（下次回来从这里附近续播）
   function buildHost(i) {
-    const tSec = resumeAt[i] > 1 ? Math.floor(resumeAt[i]) : 0; // 只有「續播超過 1 秒」才帶 t＝近似接續；首播不帶 t＝B 站從 0000 開始
+    const tSec = resumeAt[i] > 1 ? Math.floor(resumeAt[i]) : 1; // 首播帶 t=1：B 站會忽略 t=0／沒帶 t（視同未設定→登入帳號從上次進度續播）；代價＝進度條從 0001 起跳
     const host = document.createElement("div");
     host.className = "vid";
     host.innerHTML =
       '<iframe src="https://player.bilibili.com/player.html?bvid=' + covers[i].bvid +
-      '&autoplay=1&high_quality=1&danmaku=0' + (tSec ? '&t=' + tSec : '') + '" ' +
+      '&autoplay=1&high_quality=1&danmaku=0&t=' + tSec + '" ' +
       'allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
     playStart[i] = Date.now();
     ["l", "r"].forEach(function (s) { // B 方案熱區：左右拖曳＝滑畫廊（中央保留 iframe 原生控制）
