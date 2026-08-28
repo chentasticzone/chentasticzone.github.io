@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- chen! | 夢遊小陳 — Preview（繁體／YouTube 內嵌）：實驗用；核准後同步進 index-preview.html -->
+<!-- chen! | 夢遊小陳 — Preview（繁體／YouTube 內嵌）：實驗用；核准後同步進 index.html -->
 <html lang="zh-Hant"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -313,10 +313,10 @@ var(--accent-2));
   <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><clipPath id="squircle" clipPathUnits="objectBoundingBox"><path d="M0.0302 0.0000 L0.9698 0.0000 L0.9793 0.0000 L0.9824 0.0000 L0.9846 0.0002 L0.9864 0.0003 L0.9879 0.0005 L0.9893 0.0006 L0.9902 0.0010 L0.9914 0.0011 L0.9924 0.0015 L0.9932 0.0020 L0.9941 0.0023 L0.9948 0.0029 L0.9955 0.0034 L0.9961 0.0039 L0.9966 0.0045 L0.9971 0.0053 L0.9977 0.0058 L0.9980 0.0067 L0.9985 0.0076 L0.9989 0.0086 L0.9990 0.0097 L0.9994 0.0107 L0.9995 0.0121 L0.9997 0.0137 L0.9998 0.0155 L1.0000 0.0176 L1.0000 0.0207 L1.0000 0.0302 L1.0000 0.9698 L1.0000 0.9793 L1.0000 0.9824 L0.9998 0.9846 L0.9997 0.9864 L0.9995 0.9879 L0.9994 0.9893 L0.9990 0.9902 L0.9989 0.9914 L0.9985 0.9924 L0.9980 0.9932 L0.9977 0.9941 L0.9971 0.9948 L0.9966 0.9955 L0.9961 0.9961 L0.9955 0.9966 L0.9948 0.9971 L0.9941 0.9977 L0.9932 0.9980 L0.9924 0.9985 L0.9914 0.9989 L0.9902 0.9990 L0.9893 0.9994 L0.9879 0.9995 L0.9864 0.9997 L0.9846 0.9998 L0.9824 1.0000 L0.9793 1.0000 L0.9698 1.0000 L0.0302 1.0000 L0.0207 1.0000 L0.0176 1.0000 L0.0155 0.9998 L0.0137 0.9997 L0.0121 0.9995 L0.0107 0.9994 L0.0097 0.9990 L0.0086 0.9989 L0.0076 0.9985 L0.0067 0.9980 L0.0058 0.9977 L0.0053 0.9971 L0.0045 0.9966 L0.0039 0.9961 L0.0034 0.9955 L0.0029 0.9948 L0.0023 0.9941 L0.0020 0.9932 L0.0015 0.9924 L0.0011 0.9914 L0.0010 0.9902 L0.0006 0.9893 L0.0005 0.9879 L0.0003 0.9864 L0.0002 0.9846 L0.0000 0.9824 L0.0000 0.9793 L0.0000 0.9698 L0.0000 0.0302 L0.0000 0.0207 L0.0000 0.0176 L0.0002 0.0155 L0.0003 0.0137 L0.0005 0.0121 L0.0006 0.0107 L0.0010 0.0097 L0.0011 0.0086 L0.0015 0.0076 L0.0020 0.0067 L0.0023 0.0058 L0.0029 0.0053 L0.0034 0.0045 L0.0039 0.0039 L0.0045 0.0034 L0.0053 0.0029 L0.0058 0.0023 L0.0067 0.0020 L0.0076 0.0015 L0.0086 0.0011 L0.0097 0.0010 L0.0107 0.0006 L0.0121 0.0005 L0.0137 0.0003 L0.0155 0.0002 L0.0176 0.0000 L0.0207 0.0000 L0.0302 0.0000 Z"/></clipPath></defs></svg>
 
   <header>
-        <a href="./index-preview.html" class="logo-link">
+        <a href="./index.html" class="logo-link">
       <img src="icon.png" alt="chen!" class="logo-img">
     </a>
-<script>(function(){var a=document.querySelector(".logo-link");if(!a)return;var p=location.pathname,d=p.replace(/[^/]*$/,""),s=p.split("/").pop(),own=(s&&/\.html?$/.test(s))?s:"index-preview.html";if(d==="")d="/";a.setAttribute("href",d+own)})();</script>
+<script>(function(){var a=document.querySelector(".logo-link");if(!a)return;var p=location.pathname,d=p.replace(/[^/]*$/,""),s=p.split("/").pop(),own=(s&&/\.html?$/.test(s))?s:"index.html";if(d==="")d="/";a.setAttribute("href",d+own)})();</script>
 
   </header>
 
@@ -377,7 +377,7 @@ var(--accent-2));
       msg.textContent = goSimp ? "进入简中 ChentasticZone？" : "進入繁中 ChentasticZone？";
       msg.style.fontFamily = goSimp ? "'Noto Sans SC',sans-serif" : "'Noto Sans TC',sans-serif";
       msg.style.cursor = "pointer";
-      const go = () => { location.href = goSimp ? "index-preview-sc.html" : "index-preview.html"; };
+      const go = () => { location.href = goSimp ? "cn/index.html" : "index.html"; };
       msg.addEventListener("click", go);
       const goldIn = (el, c = "#d4b168") => { el.addEventListener("mouseenter", () => el.style.color = c); el.addEventListener("mouseleave", () => el.style.color = ""); }; // hover 變色（預設淡金，叉叉傳紅）
       const ok = document.createElement("span"); // 勾勾：純線條幾何 SVG
@@ -645,7 +645,7 @@ var(--accent-2));
   (function () {
     const SIMP = document.documentElement.lang === "zh-CN"; // 簡體版？
     const a = document.createElement("a");
-    a.href = SIMP ? "index-preview.html" : "index-preview-sc.html";
+    a.href = SIMP ? "index.html" : "cn/index.html";
     // 與 LOGO 垂直置中：header 上緣留白10px＋LOGO 高63px → 中心約 41px；膠囊高約30px → top ≈ 26px
     a.style.cssText = "position:fixed;top:26px;right:18px;z-index:50;display:flex;align-items:center;line-height:1;" +
       "font-family:'Noto Sans TC','Noto Sans SC','Noto Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:.08em;" +
@@ -849,5 +849,3 @@ var(--accent-2));
 
 
 </body></html>
-<!-- deploy: YvVsnanBr-c BV118tA64ExX -->
-<!-- updated: Fri Aug 28 01:10:53 PM GMT 2026 -->

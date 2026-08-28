@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>梦游小陈 | chen!</title>
-<link rel="icon" type="image/png" href="icon.png">
+<link rel="icon" type="image/png" href="../icon.png">
 <!-- 字型：Noto Sans SC（简中＋拉丁）；载入失败时自动退回系统字体，版面不会坏 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -314,7 +314,7 @@ var(--accent-2));
 
   <header>
         <a href="./index.html" class="logo-link">
-      <img src="icon.png" alt="chen!" class="logo-img">
+      <img src="../icon.png" alt="chen!" class="logo-img">
     </a>
 <script>(function(){var a=document.querySelector(".logo-link");if(!a)return;var p=location.pathname,d=p.replace(/[^/]*$/,""),s=p.split("/").pop(),own=(s&&/\.html?$/.test(s))?s:"index.html";if(d==="")d="/";a.setAttribute("href",d+own)})();</script>
 
@@ -377,7 +377,7 @@ var(--accent-2));
       msg.textContent = goSimp ? "进入简中 ChentasticZone？" : "進入繁中 ChentasticZone？";
       msg.style.fontFamily = goSimp ? "'Noto Sans SC',sans-serif" : "'Noto Sans TC',sans-serif";
       msg.style.cursor = "pointer";
-      const go = () => { location.href = goSimp ? "index.html" : "index-preview.html"; };
+      const go = () => { location.href = goSimp ? "index.html" : "../index.html"; };
       msg.addEventListener("click", go);
       const goldIn = (el, c = "#d4b168") => { el.addEventListener("mouseenter", () => el.style.color = c); el.addEventListener("mouseleave", () => el.style.color = ""); }; // hover 变色（预设淡金，叉叉传红）
       const ok = document.createElement("span"); // 勾勾：纯线条几何 SVG
@@ -406,11 +406,11 @@ var(--accent-2));
   // 5 支官方影片（新→舊）；縮圖抓 maxresdefault，沒有自動退 mqdefault
   // 之後想放任何比例的圖都可以：img 用 contain 完整呈現，卡片一律不裁切
   const covers = [ /* 縮圖：本地已裁切 4:3 封面（covers/ 資料夾）；onerror 退 YT；bvid＝簡體版內嵌用 */
-    { img: "covers/youshine4x3.jpg", title: "你的灿烂 (You Shine)",   tint: "#f2c14e", ytId: "htdrIVp0toM", bvid: "BV16E8q6SEoV" },
-    { img: "covers/rain-funk4x3.jpg", title: "雨的节奏.funk",       tint: "#6a8fd8", ytId: "bDFn-ODguzs", bvid: "BV1GggG6nEok" },
-    { img: "covers/zzz4x3.jpg", title: "（？）很大",          tint: "#9B89C5", ytId: "GwIY0M_RZak", bvid: "BV1TJGw6HEd1" },
-    { img: "covers/starfire4x3.jpg", title: "闪燃 / Starfire",     tint: "#ff7a59", ytId: "YvVsnanBr-c", bvid: "BV118tA64ExX" },
-    { img: "covers/we-share4x3.jpg", title: "We Share（这份自在）", tint: "#ff8a2b", ytId: "rz4TP9IM3uw", bvid: "BV1TNNq6AEke" },
+    { img: "../covers/youshine4x3.jpg", title: "你的灿烂 (You Shine)",   tint: "#f2c14e", ytId: "htdrIVp0toM", bvid: "BV16E8q6SEoV" },
+    { img: "../covers/rain-funk4x3.jpg", title: "雨的节奏.funk",       tint: "#6a8fd8", ytId: "bDFn-ODguzs", bvid: "BV1GggG6nEok" },
+    { img: "../covers/zzz4x3.jpg", title: "（？）很大",          tint: "#9B89C5", ytId: "GwIY0M_RZak", bvid: "BV1TJGw6HEd1" },
+    { img: "../covers/starfire4x3.jpg", title: "闪燃 / Starfire",     tint: "#ff7a59", ytId: "YvVsnanBr-c", bvid: "BV118tA64ExX" },
+    { img: "../covers/we-share4x3.jpg", title: "We Share（这份自在）", tint: "#ff8a2b", ytId: "rz4TP9IM3uw", bvid: "BV1TNNq6AEke" },
   ];
 
   const LINKTREE = "https://linktr.ee/chentasticzone";
@@ -642,7 +642,7 @@ var(--accent-2));
   (function () {
     const SIMP = document.documentElement.lang === "zh-CN"; // 簡體版？
     const a = document.createElement("a");
-    a.href = SIMP ? "index-preview.html" : "index.html";
+    a.href = SIMP ? "../index.html" : "index.html";
     // 與 LOGO 垂直置中：header 上緣留白10px＋LOGO 高63px → 中心約 41px；膠囊高約30px → top ≈ 26px
     a.style.cssText = "position:fixed;top:26px;right:18px;z-index:50;display:flex;align-items:center;line-height:1;" +
       "font-family:'Noto Sans TC','Noto Sans SC','Noto Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:.08em;" +
@@ -834,5 +834,3 @@ var(--accent-2));
 
 
 </body></html>
-<!-- deploy: YvVsnanBr-c BV118tA64ExX -->
-<!-- updated: Fri Aug 28 01:10:53 PM GMT 2026 -->
