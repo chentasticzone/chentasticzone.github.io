@@ -632,7 +632,10 @@ var(--accent-2));
       msg.textContent = goSimp ? "进入简中 ChentasticZone？" : "進入繁中 ChentasticZone？";
       msg.style.fontFamily = goSimp ? "'Noto Sans SC',sans-serif" : "'Noto Sans TC',sans-serif";
       msg.style.cursor = "pointer";
-      const go = () => { location.href = goSimp ? "index.html" : "index-preview.html"; };
+      const isPreview = /index-preview/i.test(location.pathname);
+      const go = () => { location.href = goSimp
+        ? (isPreview ? "index-preview-sc.html" : "cn/index.html")
+        : (isPreview ? "index-preview.html" : "../index.html"); };
       msg.addEventListener("click", go);
       const goldIn = (el, c = "#d4b168") => { el.addEventListener("mouseenter", () => el.style.color = c); el.addEventListener("mouseleave", () => el.style.color = ""); }; // hover 变色（预设淡金，叉叉传红）
       const ok = document.createElement("span"); // 勾勾：纯线条几何 SVG
@@ -897,7 +900,10 @@ var(--accent-2));
   (function () {
     const SIMP = document.documentElement.lang === "zh-CN"; // 簡體版？
     const a = document.createElement("a");
-    a.href = SIMP ? "index-preview.html" : "index.html";
+    const isPreview = /index-preview/i.test(location.pathname);
+    a.href = SIMP
+      ? (isPreview ? "index-preview.html" : "../index.html")
+      : (isPreview ? "index-preview-sc.html" : "cn/index.html");
     // 與 LOGO 垂直置中：header 上緣留白10px＋LOGO 高63px → 中心約 41px；膠囊高約30px → top ≈ 26px
     a.style.cssText = "position:fixed;top:26px;right:18px;z-index:50;display:flex;align-items:center;line-height:1;" +
       "font-family:'Noto Sans TC','Noto Sans SC','Noto Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:.08em;" +
