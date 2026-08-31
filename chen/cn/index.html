@@ -307,13 +307,229 @@ var(--accent-2));
     .brand { margin-right: 29px; }
     .brand svg { height: calc(var(--h, 18px) * .85); }
   }
+
+.about {
+    background: #fafafa;
+    padding-top: clamp(48px, 6.4vw, 96px);
+    padding-bottom: clamp(12px, 1.8vw, 26px);
+    padding-left: clamp(20px, 4vw, 64px);
+    padding-right: clamp(20px, 4vw, 64px);
+  }
+  .about-inner {
+    max-width: 1150px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 44.5% 44.5%;
+    justify-content: space-between;
+    align-items: start;
+    gap: 0;
+  }
+  /* 手機：單欄堆疊（先小陳、再未陳弄） */
+  @media (max-width: 768px) {
+    .about-inner {
+      grid-template-columns: 1fr;
+      gap: clamp(40px, 8vw, 64px);
+    }
+  }
+
+  /* ---- 共用文字 ---- */
+  .about-col-title {
+    color: #333333;
+    font-weight: 700;
+    font-size: clamp(16px, 1.8vw, 23px);
+    margin-bottom: clamp(34px, 3.6vw, 48px);
+    text-align: center;
+  }
+  .about-col-body {
+    color: #6a6a6a;
+    font-size: 14.5px;
+    line-height: 2.0;
+    text-align: center;
+  }
+  .studio-col .about-col-title {
+    margin-bottom: clamp(48px, 5vw, 60px);
+  }
+  .studio-col .about-col-body {
+    line-height: 2.0;
+  }
+  .studio-col .ai-hl {
+    font-weight: 400;
+    font-size: 1.18em;
+  }
+  .about-col-body + .about-col-body { margin-top: clamp(48px, 5vw, 60px); }
+
+  /* ============================================================
+     左欄：小陳 IP
+     ============================================================ */
+  .chen-col { display: flex; flex-direction: column; align-items: center; }
+  .chen-avatar {
+    width: clamp(140px, 18vw, 240px);
+    height: clamp(140px, 18vw, 240px);
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin-bottom: clamp(20px, 2.2vw, 30px);
+  }
+
+      /* 方形封面畫廊：與頂部畫冊相同 3D 卡片牆（無按鈕，可滑動/點左右圖切換） */
+  .chen-gallery {
+    position: relative;
+    width: 100%;
+    margin-top: clamp(20px, 2.2vw, 30px);
+    touch-action: pan-y;
+  }
+  .chen-gallery-stage {
+    position: relative;
+    height: calc(var(--gcard) * 1.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 900px;
+    --gcard: clamp(120px, 18vw, 190px);
+    touch-action: pan-y;
+  }
+  .chen-gallery-track {
+    position: relative;
+    width: var(--gcard);
+    height: var(--gcard);
+    transform-style: preserve-3d;
+    z-index: 1;
+  }
+  .chen-gallery-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--gcard);
+    height: var(--gcard);
+    border-radius: 9px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 1.1s cubic-bezier(.15,.78,.22,1), opacity .9s, filter .36s;
+    box-shadow: 0 10px 22px rgba(120,70,20,.12);
+    background: #f5f0ea;
+    will-change: transform;
+  }
+  .chen-gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    -webkit-user-drag: none;
+    user-select: none;
+    pointer-events: none;
+  }
+  @media (max-width: 768px) {
+    .chen-gallery-stage { --gcard: clamp(110px, 40vw, 170px); }
+  }
+  @media (max-width: 480px) {
+    .chen-gallery-stage { --gcard: clamp(100px, 52vw, 155px); }
+  }
+.chen-slogan {
+    color: #6a6a6a;
+    font-size: clamp(14px, 1.25vw, 16px);
+    line-height: 1.6;
+    text-align: center;
+    margin-top: clamp(20px, 2.2vw, 30px);
+    max-width: 100%;
+    transition: color .3s ease;
+  }
+  .chen-slogan .revibe {
+    font-weight: 500;
+    font-size: 1.08em;
+    transition: color .3s ease;
+  }
+  .chen-slogan:hover { color: #333333; }
+  .chen-slogan:hover .revibe { color: #333333; }
+  /* 平台 icon 排：跑馬燈同款品牌 wordmark（縮小20%、間距加大30%） */
+  .chen-icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: clamp(16px, 2.2vw, 32px);
+    margin-top: clamp(16px, 2vw, 26px);
+  }
+  .sicon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: transform .25s ease;
+  }
+  .sicon img, .sicon svg {
+    width: clamp(16px, 1.8vw, 20px);
+    height: clamp(16px, 1.8vw, 20px);
+    display: block;
+    object-fit: contain;
+  }
+  .sicon svg { fill: var(--logo-gray); transition: fill .25s ease; }
+  .sicon img { transition: opacity .25s ease; }
+  .sicon img.gg { position: absolute; inset: 0; opacity: 0; }
+  .sicon:hover img.gb { opacity: 0; }
+  .sicon:hover img.gg { opacity: 1; }
+  .sicon:hover { transform: translateY(-2px); }
+  .sicon:hover svg { fill: #d4b168; }
+  /* 金色切換由雙圖 gb/gg 淡入實現，見 .sicon img.gg */
+
+.studio-col { display: flex; flex-direction: column; align-items: center; }
+  .studio-logo {
+    width: clamp(140px, 18vw, 240px);
+    height: clamp(140px, 18vw, 240px);
+    border-radius: 50%;
+    border: clamp(3px, 0.5vw, 5px) solid #ffffff;
+    box-sizing: border-box;
+    object-fit: cover;
+    display: block;
+    background: #ffffff;
+    margin-bottom: clamp(20px, 2.2vw, 30px);
+    
+  }
+  .studio-col .studio-body-en {
+    color: #6a6a6a;
+    font-size: clamp(14px, 1.24vw, 15.8px);
+    line-height: 2.13;
+    text-align: center;
+    max-width: 100%;
+    margin-top: clamp(48px, 5vw, 60px);
+  }
+  .studio-link {
+    color: #333333;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: clamp(15px, 1.35vw, 17.5px);
+    margin-top: clamp(48px, 5vw, 60px);
+    transition: color .25s;
+    cursor: pointer;
+    text-align: center;
+  }
+  .studio-link:hover { color: #d4b168; }
+
+  .about-note {
+    grid-column: 1 / -1;
+    color: #9a94a2;
+    font-size: clamp(11px, 1vw, 13px);
+    text-align: center;
+    margin-top: clamp(96px, 11vw, 160px);
+    margin-bottom: 0;
+    letter-spacing: .03em;
+  }
+
+  /* 淺灰文字 hover 變深灰；無連結的游標保持 default */
+  .about-col-body, .chen-slogan {
+    transition: color .25s;
+    cursor: default;
+  }
+  .about-col-body:hover, .chen-slogan:hover { color: #333333; }
+
+  .studio-pre { color: #6a6a6a; font-weight: 400; font-size: 14.5px; }
 </style>
 </head>
 <body>
   <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><clipPath id="squircle" clipPathUnits="objectBoundingBox"><path d="M0.0302 0.0000 L0.9698 0.0000 L0.9793 0.0000 L0.9824 0.0000 L0.9846 0.0002 L0.9864 0.0003 L0.9879 0.0005 L0.9893 0.0006 L0.9902 0.0010 L0.9914 0.0011 L0.9924 0.0015 L0.9932 0.0020 L0.9941 0.0023 L0.9948 0.0029 L0.9955 0.0034 L0.9961 0.0039 L0.9966 0.0045 L0.9971 0.0053 L0.9977 0.0058 L0.9980 0.0067 L0.9985 0.0076 L0.9989 0.0086 L0.9990 0.0097 L0.9994 0.0107 L0.9995 0.0121 L0.9997 0.0137 L0.9998 0.0155 L1.0000 0.0176 L1.0000 0.0207 L1.0000 0.0302 L1.0000 0.9698 L1.0000 0.9793 L1.0000 0.9824 L0.9998 0.9846 L0.9997 0.9864 L0.9995 0.9879 L0.9994 0.9893 L0.9990 0.9902 L0.9989 0.9914 L0.9985 0.9924 L0.9980 0.9932 L0.9977 0.9941 L0.9971 0.9948 L0.9966 0.9955 L0.9961 0.9961 L0.9955 0.9966 L0.9948 0.9971 L0.9941 0.9977 L0.9932 0.9980 L0.9924 0.9985 L0.9914 0.9989 L0.9902 0.9990 L0.9893 0.9994 L0.9879 0.9995 L0.9864 0.9997 L0.9846 0.9998 L0.9824 1.0000 L0.9793 1.0000 L0.9698 1.0000 L0.0302 1.0000 L0.0207 1.0000 L0.0176 1.0000 L0.0155 0.9998 L0.0137 0.9997 L0.0121 0.9995 L0.0107 0.9994 L0.0097 0.9990 L0.0086 0.9989 L0.0076 0.9985 L0.0067 0.9980 L0.0058 0.9977 L0.0053 0.9971 L0.0045 0.9966 L0.0039 0.9961 L0.0034 0.9955 L0.0029 0.9948 L0.0023 0.9941 L0.0020 0.9932 L0.0015 0.9924 L0.0011 0.9914 L0.0010 0.9902 L0.0006 0.9893 L0.0005 0.9879 L0.0003 0.9864 L0.0002 0.9846 L0.0000 0.9824 L0.0000 0.9793 L0.0000 0.9698 L0.0000 0.0302 L0.0000 0.0207 L0.0000 0.0176 L0.0002 0.0155 L0.0003 0.0137 L0.0005 0.0121 L0.0006 0.0107 L0.0010 0.0097 L0.0011 0.0086 L0.0015 0.0076 L0.0020 0.0067 L0.0023 0.0058 L0.0029 0.0053 L0.0034 0.0045 L0.0039 0.0039 L0.0045 0.0034 L0.0053 0.0029 L0.0058 0.0023 L0.0067 0.0020 L0.0076 0.0015 L0.0086 0.0011 L0.0097 0.0010 L0.0107 0.0006 L0.0121 0.0005 L0.0137 0.0003 L0.0155 0.0002 L0.0176 0.0000 L0.0207 0.0000 L0.0302 0.0000 Z"/></clipPath></defs></svg>
 
   <header>
-        <a href="./index.html" class="logo-link">
+        <a href=".././index.html" class="logo-link">
       <img src="../icon.png" alt="chen!" class="logo-img">
     </a>
 <script>(function(){var a=document.querySelector(".logo-link");if(!a)return;var p=location.pathname,d=p.replace(/[^/]*$/,""),s=p.split("/").pop(),own=(s&&/\.html?$/.test(s))?s:"index.html";if(d==="")d="/";a.setAttribute("href",d+own)})();</script>
@@ -343,6 +559,45 @@ var(--accent-2));
         <div class="marquee-track" id="marquee"></div>
       </div>
     </section>
+  <section class="about">
+      <div class="about-inner">
+        <div class="chen-col">
+          <img class="chen-avatar" src="../chen_avatar.png" alt="chen!">
+          <h2 class="about-col-title">梦游小陈 | chen!</h2>
+          <p class="about-col-body">想要走进二次元的小陈，总被导航到奇怪的地方…</p>
+                    <div class="chen-gallery" id="chengallery">
+            <div class="chen-gallery-stage" id="chengallerystage">
+              <div class="chen-gallery-track" id="chengallerytrack">
+                <div class="chen-gallery-item"><img src="../covers/starfire.jpg" alt="Starfire"></div>
+                <div class="chen-gallery-item"><img src="../covers/zzz.jpg" alt="zzz"></div>
+                <div class="chen-gallery-item"><img src="../covers/we-share.jpg" alt="We Share"></div>
+                <div class="chen-gallery-item"><img src="../covers/rain-funk.jpg" alt="雨的节奏.funk"></div>
+                <div class="chen-gallery-item"><img src="../covers/youshine.jpg" alt="你的灿烂"></div>
+              </div>
+            </div>
+          </div>          <p class="chen-slogan">穿越万千宇宙，期待与每一个你共振 <span class="revibe">Re-Vibe</span></p>
+          <div class="chen-icons">
+            <a class="sicon" href="https://www.youtube.com/@chentasticzone" target="_blank" rel="noopener" title="YouTube"><img class="gb" src="../icons/icons8-youtube-60.png" alt="YouTube"><img class="gg" src="../icons/icons8-youtube-60_gold.png" alt=""></a>
+            <a class="sicon" href="https://space.bilibili.com/1823118814?spm_id_from=333.788.0.0" target="_blank" rel="noopener" title="哔哩哔哩"><img class="gb" src="../icons/icons8-tv-60.png" alt="哔哩哔哩"><img class="gg" src="../icons/icons8-tv-60_gold.png" alt=""></a>
+            <a class="sicon" href="https://streetvoice.com/chentasticzone/" target="_blank" rel="noopener" title="StreetVoice"><img class="gb" src="../icons/sv_logo.png" alt="StreetVoice"><img class="gg" src="../icons/sv_logo_gold.png" alt=""></a>
+            <a class="sicon" href="https://music.youtube.com/@chentasticzone" target="_blank" rel="noopener" title="YouTube Music"><img class="gb" src="../icons/icons8-play-60.png" alt="YouTube Music"><img class="gg" src="../icons/icons8-play-60_gold.png" alt=""></a>
+            <a class="sicon" href="https://v.douyin.com/I-iL_YECKcI/" target="_blank" rel="noopener" title="抖音"><img class="gb" src="../icons/icons8-tiktok-60.png" alt="抖音"><img class="gg" src="../icons/icons8-tiktok-60_gold.png" alt=""></a>
+            <a class="sicon" href="https://qishui.douyin.com/s/iC9UMTm9" target="_blank" rel="noopener" title="汽水音乐"><img class="gb" src="../icons/icons8-kawaii-soda-60.png" alt="汽水音乐"><img class="gg" src="../icons/icons8-kawaii-soda-60_gold.png" alt=""></a>
+            <a class="sicon" href="https://linktr.ee/chentasticzone" target="_blank" rel="noopener" title="SoundCloud"><img class="gb" src="../icons/icons8-soundcloud-60.png" alt="SoundCloud"><img class="gg" src="../icons/icons8-soundcloud-60_gold.png" alt=""></a>
+            <a class="sicon" href="https://genius.com/artists/Chen-virtual" target="_blank" rel="noopener" title="Genius"><img class="gb" src="../icons/icons8-genius-60.png" alt="Genius"><img class="gg" src="../icons/icons8-genius-60_gold.png" alt=""></a>
+          </div>
+        </div>
+        <div class="studio-col">
+          <img class="studio-logo" src="../studio-logo.png" alt="未陈弄">
+          <h2 class="about-col-title">ChentasticZone 未陈弄</h2>
+          <p class="about-col-body">专注于<span class="ai-hl">AI</span>驱动、突破路径依赖的叙事系统设计与内容创作。<br>每一拍、每一帧，每一处讯息的转折，都值得反复打磨。</p>
+          <p class="about-col-body studio-body-en">A Digital Narrative Studio / Creative Collective focusing on<br>breaking "formulaic stagnation" leveraging AI synergies.<br>Every beat, every frame, and every narrative pivot<br>deserves to be crafted and aligned.</p>
+          <a class="studio-link" href="https://iancstudio.blogspot.com/" target="_blank" rel="noopener"><span class="studio-pre">原 </span>Ian C. Studio</a>
+        </div>
+      </div>
+    
+          <p class="about-note">© 2026 ChentasticZone 未陈弄</p>
+</section>
   </main>
 
 <script>
@@ -377,7 +632,7 @@ var(--accent-2));
       msg.textContent = goSimp ? "进入简中 ChentasticZone？" : "進入繁中 ChentasticZone？";
       msg.style.fontFamily = goSimp ? "'Noto Sans SC',sans-serif" : "'Noto Sans TC',sans-serif";
       msg.style.cursor = "pointer";
-      const go = () => { location.href = goSimp ? "index.html" : "../index.html"; };
+      const go = () => { location.href = goSimp ? "index.html" : "index-preview.html"; };
       msg.addEventListener("click", go);
       const goldIn = (el, c = "#d4b168") => { el.addEventListener("mouseenter", () => el.style.color = c); el.addEventListener("mouseleave", () => el.style.color = ""); }; // hover 变色（预设淡金，叉叉传红）
       const ok = document.createElement("span"); // 勾勾：纯线条几何 SVG
@@ -406,11 +661,11 @@ var(--accent-2));
   // 5 支官方影片（新→舊）；縮圖抓 maxresdefault，沒有自動退 mqdefault
   // 之後想放任何比例的圖都可以：img 用 contain 完整呈現，卡片一律不裁切
   const covers = [ /* 縮圖：本地已裁切 4:3 封面（covers/ 資料夾）；onerror 退 YT；bvid＝簡體版內嵌用 */
-    { img: "../covers/youshine4x3.jpg", title: "你的灿烂 (You Shine)",   tint: "#f2c14e", ytId: "htdrIVp0toM", bvid: "BV16E8q6SEoV" },
-    { img: "../covers/rain-funk4x3.jpg", title: "雨的节奏.funk",       tint: "#6a8fd8", ytId: "bDFn-ODguzs", bvid: "BV1GggG6nEok" },
-    { img: "../covers/zzz4x3.jpg", title: "（？）很大",          tint: "#9B89C5", ytId: "GwIY0M_RZak", bvid: "BV1TJGw6HEd1" },
-    { img: "../covers/starfire4x3.jpg", title: "闪燃 / Starfire",     tint: "#ff7a59", ytId: "YvVsnanBr-c", bvid: "BV118tA64ExX" },
-    { img: "../covers/we-share4x3.jpg", title: "We Share（这份自在）", tint: "#ff8a2b", ytId: "rz4TP9IM3uw", bvid: "BV1TNNq6AEke" },
+    { img: "covers/youshine4x3.jpg", title: "你的灿烂 (You Shine)",   tint: "#f2c14e", ytId: "htdrIVp0toM", bvid: "BV16E8q6SEoV" },
+    { img: "covers/rain-funk4x3.jpg", title: "雨的节奏.funk",       tint: "#6a8fd8", ytId: "bDFn-ODguzs", bvid: "BV1GggG6nEok" },
+    { img: "covers/zzz4x3.jpg", title: "（？）很大",          tint: "#9B89C5", ytId: "GwIY0M_RZak", bvid: "BV1TJGw6HEd1" },
+    { img: "covers/starfire4x3.jpg", title: "闪燃 / Starfire",     tint: "#ff7a59", ytId: "YvVsnanBr-c", bvid: "BV118tA64ExX" },
+    { img: "covers/we-share4x3.jpg", title: "We Share（这份自在）", tint: "#ff8a2b", ytId: "rz4TP9IM3uw", bvid: "BV1TNNq6AEke" },
   ];
 
   const LINKTREE = "https://linktr.ee/chentasticzone";
@@ -491,7 +746,7 @@ var(--accent-2));
   covers.forEach((c, i) => {
     const el = document.createElement("div");
     el.className = "card";
-    el.innerHTML = '<div class="imgwrap"><img src="' + c.img + '" alt="' + c.title + ' 封面"></div><div class="playglyph"><svg style="width:12%" viewBox="0 0 48 48" aria-hidden="true" opacity=".9"><path d="M16 10 L40 24 L16 38 Z" fill="#ffffff" stroke="#ffffff" stroke-width="8" stroke-linejoin="round"/></svg></div>';
+    el.innerHTML = '<div class="imgwrap"><img src="../' + c.img + '" alt="' + c.title + ' 封面"></div><div class="playglyph"><svg style="width:12%" viewBox="0 0 48 48" aria-hidden="true" opacity=".9"><path d="M16 10 L40 24 L16 38 Z" fill="#ffffff" stroke="#ffffff" stroke-width="8" stroke-linejoin="round"/></svg></div>';
     const im = el.querySelector("img");
     im.onerror = function () { // B站縮圖抓不到 → 自動退回 YouTube 縮圖（maxres → mq），永不開天窗
       this.onerror = function () { this.onerror = null; this.src = "https://i.ytimg.com/vi/" + c.ytId + "/mqdefault.jpg"; };
@@ -642,7 +897,7 @@ var(--accent-2));
   (function () {
     const SIMP = document.documentElement.lang === "zh-CN"; // 簡體版？
     const a = document.createElement("a");
-    a.href = SIMP ? "../index.html" : "index.html";
+    a.href = SIMP ? "index-preview.html" : "index.html";
     // 與 LOGO 垂直置中：header 上緣留白10px＋LOGO 高63px → 中心約 41px；膠囊高約30px → top ≈ 26px
     a.style.cssText = "position:fixed;top:26px;right:18px;z-index:50;display:flex;align-items:center;line-height:1;" +
       "font-family:'Noto Sans TC','Noto Sans SC','Noto Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:.08em;" +
@@ -833,4 +1088,81 @@ var(--accent-2));
 </script>
 
 
+<script>
+          /* chentasticzone About 方形封面畫廊：3D 卡片牆（無限循環、滑動 + 點左右圖切換） */
+  (function () {
+    const gal = document.getElementById('chengallery');
+    if (!gal) return;
+    const track = document.getElementById('chengallerytrack');
+    const items = Array.prototype.slice.call(track.querySelectorAll('.chen-gallery-item'));
+    const N = items.length;
+    let cur = 2;
+    let dragging = false, startX = 0, dx = 0, moved = false, suppressClick = false, downCard = null;
+
+    function offFor(i) {
+      let off = i - cur;
+      if (off > N / 2) off -= N;
+      if (off < -N / 2) off += N;
+      return off;
+    }
+    function layout() {
+      const w = items[0].offsetWidth || 170;
+      const GAP = Math.round(w * .8);
+      items.forEach(function (card, i) {
+        const off = offFor(i);
+        const abs = Math.abs(off);
+        const x = off * GAP + dx;
+        const scale = off === 0 ? 1 : Math.max(.62, .92 - (abs - 1) * .1);
+        const rot = off === 0 ? 0 : (off < 0 ? 32 : -32);
+        const z = -abs * Math.round(w * .3);
+        card.style.transform = "translateX(" + x + "px) translateZ(" + z + "px) rotateY(" + rot + "deg) scale(" + scale + ")";
+        card.style.zIndex = String(100 - abs);
+        card.style.opacity = abs > 1 ? "0" : "1";
+        card.style.filter = off === 0 ? "none" : "brightness(.82)";
+        card.style.pointerEvents = abs > 1 ? "none" : "auto";
+      });
+    }
+    function goStep(d) {
+      cur = (cur + d + N) % N;
+      dx = 0;
+      layout();
+    }
+    function snap() {
+      const step = (items[0].offsetWidth || 170) * .45;
+      if (dx > step) goStep(-1);
+      else if (dx < -step) goStep(1);
+      else { dx = 0; layout(); }
+    }
+    track.addEventListener('pointerdown', function (e) {
+      dragging = true; startX = e.clientX; dx = 0; moved = false;
+      downCard = e.target.closest ? e.target.closest('.chen-gallery-item') : null;
+    });
+    track.addEventListener('pointermove', function (e) {
+      if (!dragging) return;
+      dx = e.clientX - startX;
+      if (Math.abs(dx) > 6) moved = true;
+      layout();
+    });
+    const endDrag = function () {
+      if (!dragging) return;
+      dragging = false;
+      if (moved) {
+        snap();
+      } else if (downCard) {
+        const i = items.indexOf(downCard);
+        if (i !== -1 && i !== cur) goStep(offFor(i));
+        dx = 0; layout();
+      } else {
+        dx = 0; layout();
+      }
+    };
+    track.addEventListener('pointerup', endDrag);
+    track.addEventListener('pointercancel', endDrag);
+    window.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') goStep(-1);
+      else if (e.key === 'ArrowRight') goStep(1);
+    });
+    window.addEventListener('resize', function () { layout(); });
+    layout();
+  })();</script>
 </body></html>
