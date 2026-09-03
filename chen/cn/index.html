@@ -1057,12 +1057,13 @@ var(--accent-2));
   const playStart = {};   // 每首歌开始播放的时间戳
   const resumeAt = {};    // 离开时记下的秒数（下次回来从这里附近续播）
   function buildHost(i) {
+    const isTouch = matchMedia("(pointer: coarse)").matches; // 手機/平板觸控：B 站自動播會被攔截，改手動點播
     const tSec = resumeAt[i] > 1 ? Math.floor(resumeAt[i]) : 1; // 首播帶 t=1：B 站會忽略 t=0／沒帶 t（視同未設定→登入帳號從上次進度續播）；代價＝進度條從 0001 起跳
     const host = document.createElement("div");
     host.className = "vid";
     host.innerHTML =
       '<iframe src="https://player.bilibili.com/player.html?bvid=' + covers[i].bvid +
-      '&autoplay=1&high_quality=1&danmaku=0&t=' + tSec + '" ' +
+      '&autoplay=' + (isTouch ? 0 : 1) + '&high_quality=1&danmaku=0&t=' + tSec + '" ' +
       'allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
     playStart[i] = Date.now();
     ["l", "r"].forEach(function (s) { // B 方案熱區：左右拖曳＝滑畫廊（中央保留 iframe 原生控制）
