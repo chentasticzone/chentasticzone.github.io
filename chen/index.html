@@ -571,8 +571,8 @@ var(--accent-2));
                     <div class="chen-gallery" id="chengallery">
             <div class="chen-gallery-stage" id="chengallerystage">
               <div class="chen-gallery-track" id="chengallerytrack">
-                <div class="chen-gallery-item"><img src="covers/starfire.jpg" alt="Starfire"></div>
                 <div class="chen-gallery-item"><img src="covers/zzz.jpg" alt="zzz"></div>
+                <div class="chen-gallery-item"><img src="covers/starfire.jpg" alt="Starfire"></div>
                 <div class="chen-gallery-item"><img src="covers/we-share.jpg" alt="We Share"></div>
                 <div class="chen-gallery-item"><img src="covers/rain-funk.jpg" alt="雨的節奏.funk"></div>
                 <div class="chen-gallery-item"><img src="covers/youshine.jpg" alt="你的燦爛"></div>
@@ -1120,7 +1120,7 @@ var(--accent-2));
     const track = document.getElementById('chengallerytrack');
     const items = Array.prototype.slice.call(track.querySelectorAll('.chen-gallery-item'));
     const N = items.length;
-    let cur = 2;
+    let cur = 0;
     let dragging = false, startX = 0, dx = 0, moved = false, suppressClick = false, downCard = null;
 
     function offFor(i) {
