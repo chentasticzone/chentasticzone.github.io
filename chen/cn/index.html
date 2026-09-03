@@ -746,6 +746,7 @@ var(--accent-2));
 
   // ------- 建立封面卡片 -------
   const track = document.getElementById("track");
+  const IS_TOUCH = matchMedia("(pointer: coarse)").matches; // 觸控裝置：畫廊滑動只切換、點擊才跳轉 B 站
   covers.forEach((c, i) => {
     const el = document.createElement("div");
     el.className = "card";
@@ -757,9 +758,10 @@ var(--accent-2));
     };
     el.addEventListener("click", () => {
       if (galleryDragged) { galleryDragged = false; return; } // 拖曳剛結束＝不算點擊
+      if (IS_TOUCH) { playTrack(i); return; } // 手機：點擊封面＝直接跳轉 B 站播放
       // 點任何封面＝直接開始播放；點正在播放的中央卡片＝暫停／續播
       if (i === active && playingIdx === i) {
-        hosts[i].remove(); delete hosts[i]; // B站版：無法遠端暫停 → 直接停掉
+        if (hosts[i]) { hosts[i].remove(); delete hosts[i]; } // B站版：無法遠端暫停 → 直接停掉
         playingIdx = -1;
         updateGlyphs();
         return;
@@ -821,7 +823,8 @@ var(--accent-2));
 
   function goStep(d) {
     const i = (active + d + N) % N;
-    if (playingIdx !== -1) playTrack(i); else setActive(i); // 播放中換曲 → 直接續播新曲
+    if (IS_TOUCH) setActive(i); // 手機：滑動只切換，不自動播放（避免一滑就跳轉 B 站）
+    else if (playingIdx !== -1) playTrack(i); else setActive(i); // 播放中換曲 → 直接續播新曲
   }
   document.getElementById("prev").addEventListener("click", (e) => { e.stopPropagation(); goStep(-1); });
   document.getElementById("next").addEventListener("click", (e) => { e.stopPropagation(); goStep(1); });
@@ -1057,13 +1060,14 @@ var(--accent-2));
   const playStart = {};   // 每首歌开始播放的时间戳
   const resumeAt = {};    // 离开时记下的秒数（下次回来从这里附近续播）
   function buildHost(i) {
-    const isTouch = matchMedia("(pointer: coarse)").matches; // 手機/平板觸控：B 站自動播會被攔截，改手動點播
+    const isTouch = matchMedia("(pointer: coarse)").matches; // 手機/平板觸控：B 站移動播放器嵌入相容性差，改直接跳轉 B 站播放頁
+    if (isTouch) { window.open("https://www.bilibili.com/video/" + covers[i].bvid, "_blank"); return null; }
     const tSec = resumeAt[i] > 1 ? Math.floor(resumeAt[i]) : 1; // 首播帶 t=1：B 站會忽略 t=0／沒帶 t（視同未設定→登入帳號從上次進度續播）；代價＝進度條從 0001 起跳
     const host = document.createElement("div");
     host.className = "vid";
     host.innerHTML =
       '<iframe src="https://player.bilibili.com/player.html?bvid=' + covers[i].bvid +
-      '&autoplay=' + (isTouch ? 0 : 1) + '&high_quality=1&danmaku=0&t=' + tSec + '" ' +
+      '&autoplay=1&high_quality=1&danmaku=0' + '" ' +
       'allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
     playStart[i] = Date.now();
     ["l", "r"].forEach(function (s) { // B 方案熱區：左右拖曳＝滑畫廊（中央保留 iframe 原生控制）
