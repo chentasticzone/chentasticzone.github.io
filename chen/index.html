@@ -201,7 +201,7 @@ var(--accent-2));
     user-select: none;
   }
   .meta .mid { text-align: center; min-width: 0; cursor: pointer; }
-  .meta .title { font-size: clamp(13px, 1.328vw, 20px); font-weight: 700; color: var(--logo-gray); transition: color .2s; }
+  .meta .title { font-size: clamp(13px, 1.1vw, 15px); font-weight: 700; color: var(--logo-gray); transition: color .2s; }
       .meta:hover .title { color: #111; } /* 主標題＝LOGO 深灰（原本繼承近黑）；1280px 時 17px */
   .meta.swap .title, .meta.swap .sub { animation: metaIn 1.1s cubic-bezier(.5,0,0,1) both; }
   .meta.swap .sub { animation-delay: .07s; }
@@ -339,7 +339,7 @@ var(--accent-2));
   .about-col-title {
     color: #333333;
     font-weight: 700;
-    font-size: clamp(16px, 1.8vw, 23px);
+    font-size: clamp(15px, 1.7vw, 22px);
     margin-bottom: clamp(34px, 3.6vw, 48px);
     text-align: center;
   }
@@ -357,7 +357,8 @@ var(--accent-2));
   }
   .studio-col .ai-hl {
     font-weight: 400;
-    font-size: 1.18em;
+    font-size: 17px;
+    line-height: 1.5;
   }
   .about-col-body + .about-col-body { margin-top: clamp(48px, 5vw, 60px); }
 
@@ -429,7 +430,7 @@ var(--accent-2));
   }
 .chen-slogan {
     color: #6a6a6a;
-    font-size: clamp(14px, 1.25vw, 16px);
+    font-size: clamp(13px, 1.25vw, 15px);
     line-height: 1.6;
     text-align: center;
     margin-top: clamp(20px, 2.2vw, 30px);
@@ -437,8 +438,9 @@ var(--accent-2));
     transition: color .3s ease;
   }
   .chen-slogan .revibe {
-    font-weight: 500;
-    font-size: 1.08em;
+    font-family: 'Kaushan Script', cursive;
+    font-weight: 400;
+    font-size: 17px;
     transition: color .3s ease;
   }
   .chen-slogan:hover { color: #333333; }
@@ -490,7 +492,7 @@ var(--accent-2));
   }
   .studio-col .studio-body-en {
     color: #6a6a6a;
-    font-size: clamp(14px, 1.24vw, 15.8px);
+    font-size: clamp(14px, 1.24vw, 15px);
     line-height: 2.13;
     text-align: center;
     max-width: 100%;
@@ -500,13 +502,24 @@ var(--accent-2));
     color: #333333;
     text-decoration: none;
     font-weight: 500;
-    font-size: clamp(15px, 1.35vw, 17.5px);
-    margin-top: clamp(48px, 5vw, 60px);
+    font-size: clamp(13px, 1.2vw, 15px);
+    margin-top: clamp(53px, 3.5vw, 54px);
     transition: color .25s;
     cursor: pointer;
     text-align: center;
   }
   .studio-link:hover { color: #d4b168; }
+  .studio-email {
+    color: #6a6a6a;
+    font-size: clamp(13px, 1.2vw, 15px);
+    line-height: 1.6;
+    text-align: center;
+    text-decoration: none;
+    margin-top: clamp(19px, 2.2vw, 29px);
+    transition: color .25s;
+    cursor: pointer;
+  }
+  .studio-email:hover { color: #d4b168; }
 
   .about-note {
     grid-column: 1 / -1;
@@ -525,8 +538,13 @@ var(--accent-2));
   }
   .about-col-body:hover, .chen-slogan:hover { color: #333333; }
 
-  .studio-pre { color: #6a6a6a; font-weight: 400; font-size: 14.5px; }
+  .studio-pre { color: #6a6a6a; font-weight: 400; font-size: 15px; }
+@media (max-width: 1280px) {
+  .studio-link { margin-top: clamp(47px, 3.8vw, 48px); }
+}
+
 </style>
+  <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
 </head>
 <body>
   <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><clipPath id="squircle" clipPathUnits="objectBoundingBox"><path d="M0.0302 0.0000 L0.9698 0.0000 L0.9793 0.0000 L0.9824 0.0000 L0.9846 0.0002 L0.9864 0.0003 L0.9879 0.0005 L0.9893 0.0006 L0.9902 0.0010 L0.9914 0.0011 L0.9924 0.0015 L0.9932 0.0020 L0.9941 0.0023 L0.9948 0.0029 L0.9955 0.0034 L0.9961 0.0039 L0.9966 0.0045 L0.9971 0.0053 L0.9977 0.0058 L0.9980 0.0067 L0.9985 0.0076 L0.9989 0.0086 L0.9990 0.0097 L0.9994 0.0107 L0.9995 0.0121 L0.9997 0.0137 L0.9998 0.0155 L1.0000 0.0176 L1.0000 0.0207 L1.0000 0.0302 L1.0000 0.9698 L1.0000 0.9793 L1.0000 0.9824 L0.9998 0.9846 L0.9997 0.9864 L0.9995 0.9879 L0.9994 0.9893 L0.9990 0.9902 L0.9989 0.9914 L0.9985 0.9924 L0.9980 0.9932 L0.9977 0.9941 L0.9971 0.9948 L0.9966 0.9955 L0.9961 0.9961 L0.9955 0.9966 L0.9948 0.9971 L0.9941 0.9977 L0.9932 0.9980 L0.9924 0.9985 L0.9914 0.9989 L0.9902 0.9990 L0.9893 0.9994 L0.9879 0.9995 L0.9864 0.9997 L0.9846 0.9998 L0.9824 1.0000 L0.9793 1.0000 L0.9698 1.0000 L0.0302 1.0000 L0.0207 1.0000 L0.0176 1.0000 L0.0155 0.9998 L0.0137 0.9997 L0.0121 0.9995 L0.0107 0.9994 L0.0097 0.9990 L0.0086 0.9989 L0.0076 0.9985 L0.0067 0.9980 L0.0058 0.9977 L0.0053 0.9971 L0.0045 0.9966 L0.0039 0.9961 L0.0034 0.9955 L0.0029 0.9948 L0.0023 0.9941 L0.0020 0.9932 L0.0015 0.9924 L0.0011 0.9914 L0.0010 0.9902 L0.0006 0.9893 L0.0005 0.9879 L0.0003 0.9864 L0.0002 0.9846 L0.0000 0.9824 L0.0000 0.9793 L0.0000 0.9698 L0.0000 0.0302 L0.0000 0.0207 L0.0000 0.0176 L0.0002 0.0155 L0.0003 0.0137 L0.0005 0.0121 L0.0006 0.0107 L0.0010 0.0097 L0.0011 0.0086 L0.0015 0.0076 L0.0020 0.0067 L0.0023 0.0058 L0.0029 0.0053 L0.0034 0.0045 L0.0039 0.0039 L0.0045 0.0034 L0.0053 0.0029 L0.0058 0.0023 L0.0067 0.0020 L0.0076 0.0015 L0.0086 0.0011 L0.0097 0.0010 L0.0107 0.0006 L0.0121 0.0005 L0.0137 0.0003 L0.0155 0.0002 L0.0176 0.0000 L0.0207 0.0000 L0.0302 0.0000 Z"/></clipPath></defs></svg>
@@ -596,6 +614,7 @@ var(--accent-2));
           <p class="about-col-body">專注於<span class="ai-hl">AI</span>驅動、突破路徑依賴的敘事系統設計與內容創作。<br>每一拍、每一幀，每一處訊息的轉折，都值得反覆打磨。</p>
           <p class="about-col-body studio-body-en">A Digital Narrative Studio / Creative Collective focusing on<br>breaking "formulaic stagnation" leveraging AI synergies.<br>Every beat, every frame, and every narrative pivot<br>deserves to be crafted and aligned.</p>
           <a class="studio-link" href="https://iancstudio.blogspot.com/" target="_blank" rel="noopener"><span class="studio-pre">原 </span>Ian C. Studio</a>
+          <a class="studio-email" href="mailto:chentasticzone@outlook.com">chentasticzone@outlook.com</a>
         </div>
       </div>
     
