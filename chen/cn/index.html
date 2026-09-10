@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>梦游小陈 | chen!</title>
-<link rel="icon" type="image/png" href="../icon.png">
+<link rel="icon" type="image/png" href="icon.png">
 <!-- 字型：Noto Sans SC（简中＋拉丁）；载入失败时自动退回系统字体，版面不会坏 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -228,6 +228,13 @@ var(--accent-2));
   .meta button:hover { color: #d4b168; } /* 假金色 */
   .meta button:active { transform: scale(.9); }
   .arrow { width: calc(25 * var(--u)); height: auto; display: block; }
+  /* 桌面：左右箭头固定在离中心 16vw（clamp）处，不随标题长短伸缩 */
+  @media (min-width: 769px) {
+    .meta { position: relative; }
+    .meta #prev, .meta #next { position: absolute; top: 50%; transform: translateY(-50%); }
+    .meta #prev { left: calc(50% - clamp(90px, 11vw, 200px)); }
+    .meta #next { right: calc(50% - clamp(90px, 11vw, 200px)); }
+  }
 
   /* ---------- Platform marquee ---------- */
   .platforms {
@@ -322,7 +329,7 @@ var(--accent-2));
     display: grid;
     grid-template-columns: 44.5% 44.5%;
     justify-content: space-between;
-    align-items: start;
+    align-items: stretch;
     gap: 0;
   }
   /* 手機：單欄堆疊（先小陳、再未陳弄） */
@@ -431,7 +438,7 @@ var(--accent-2));
     font-size: clamp(13px, 1.25vw, 15px);
     line-height: 1.6;
     text-align: center;
-    margin-top: clamp(20px, 2.2vw, 30px);
+    margin-top: auto;
     max-width: 100%;
     transition: color .3s ease;
   }
@@ -501,7 +508,7 @@ var(--accent-2));
     text-decoration: none;
     font-weight: 500;
     font-size: clamp(13px, 1.2vw, 15px);
-    margin-top: clamp(53px, 3.5vw, 54px);
+    margin-top: auto;
     transition: color .25s;
     cursor: pointer;
     text-align: center;
@@ -548,7 +555,7 @@ var(--accent-2));
 
   <header>
         <a href="./index.html" class="logo-link">
-      <img src="../icon.png" alt="chen!" class="logo-img">
+      <img src="icon.png" alt="chen!" class="logo-img">
     </a>
 <script>(function(){var a=document.querySelector(".logo-link");if(!a)return;var p=location.pathname,d=p.replace(/[^/]*$/,""),s=p.split("/").pop(),own=(s&&/\.html?$/.test(s))?s:"index.html";if(d==="")d="/";a.setAttribute("href",d+own)})();</script>
 
@@ -580,38 +587,39 @@ var(--accent-2));
   <section class="about">
       <div class="about-inner">
         <div class="chen-col">
-          <img class="chen-avatar" src="../chen_avatar.png" alt="chen!">
+          <img class="chen-avatar" src="chen_avatar.png" alt="chen!">
           <h2 class="about-col-title">梦游小陈 | chen!</h2>
           <p class="about-col-body">想要走进二次元的小陈，总被导航到奇怪的地方…</p>
                     <div class="chen-gallery" id="chengallery">
             <div class="chen-gallery-stage" id="chengallerystage">
               <div class="chen-gallery-track" id="chengallerytrack">
-                <div class="chen-gallery-item"><img src="../covers/zzz.jpg" alt="zzz"></div>
-                <div class="chen-gallery-item"><img src="../covers/starfire.jpg" alt="Starfire"></div>
-                <div class="chen-gallery-item"><img src="../covers/we-share.jpg" alt="We Share"></div>
-                <div class="chen-gallery-item"><img src="../covers/rain-funk.jpg" alt="雨的节奏.funk"></div>
-                <div class="chen-gallery-item"><img src="../covers/youshine.jpg" alt="你的灿烂"></div>
+                <div class="chen-gallery-item"><img src="covers/zzz.jpg" alt="zzz"></div>
+                <div class="chen-gallery-item"><img src="covers/to-the-light.jpg" alt="To the Light"></div>
+                <div class="chen-gallery-item"><img src="covers/starfire.jpg" alt="Starfire"></div>
+                <div class="chen-gallery-item"><img src="covers/we-share.jpg" alt="We Share"></div>
+                <div class="chen-gallery-item"><img src="covers/rain-funk.jpg" alt="雨的节奏.funk"></div>
+                <div class="chen-gallery-item"><img src="covers/youshine.jpg" alt="你的灿烂"></div>
               </div>
             </div>
           </div>          <p class="chen-slogan">穿越万千宇宙，期待与每一个你共振 <span class="revibe">Re-Vibe</span></p>
           <div class="chen-icons">
-            <a class="sicon" href="https://www.youtube.com/@chentasticzone" target="_blank" rel="noopener" title="YouTube"><img class="gb" src="../icons/icons8-youtube-60.png" alt="YouTube"><img class="gg" src="../icons/icons8-youtube-60_gold.png" alt=""></a>
-            <a class="sicon" href="https://space.bilibili.com/1823118814?spm_id_from=333.788.0.0" target="_blank" rel="noopener" title="哔哩哔哩"><img class="gb" src="../icons/icons8-tv-60.png" alt="哔哩哔哩"><img class="gg" src="../icons/icons8-tv-60_gold.png" alt=""></a>
-            <a class="sicon" href="https://streetvoice.com/chentasticzone/" target="_blank" rel="noopener" title="StreetVoice"><img class="gb" src="../icons/sv_logo.png" alt="StreetVoice"><img class="gg" src="../icons/sv_logo_gold.png" alt=""></a>
-            <a class="sicon" href="https://music.youtube.com/@chentasticzone" target="_blank" rel="noopener" title="YouTube Music"><img class="gb" src="../icons/icons8-play-60.png" alt="YouTube Music"><img class="gg" src="../icons/icons8-play-60_gold.png" alt=""></a>
-            <a class="sicon" href="https://v.douyin.com/I-iL_YECKcI/" target="_blank" rel="noopener" title="抖音"><img class="gb" src="../icons/icons8-tiktok-60.png" alt="抖音"><img class="gg" src="../icons/icons8-tiktok-60_gold.png" alt=""></a>
-            <a class="sicon" href="https://qishui.douyin.com/s/iC9UMTm9" target="_blank" rel="noopener" title="汽水音乐"><img class="gb" src="../icons/icons8-kawaii-soda-60.png" alt="汽水音乐"><img class="gg" src="../icons/icons8-kawaii-soda-60_gold.png" alt=""></a>
-            <a class="sicon" href="https://linktr.ee/chentasticzone" target="_blank" rel="noopener" title="SoundCloud"><img class="gb" src="../icons/icons8-soundcloud-60.png" alt="SoundCloud"><img class="gg" src="../icons/icons8-soundcloud-60_gold.png" alt=""></a>
-            <a class="sicon" href="https://genius.com/artists/Chen-virtual" target="_blank" rel="noopener" title="Genius"><img class="gb" src="../icons/icons8-genius-60.png" alt="Genius"><img class="gg" src="../icons/icons8-genius-60_gold.png" alt=""></a>
+            <a class="sicon" href="https://www.youtube.com/@chentasticzone" target="_blank" rel="noopener" title="YouTube"><img class="gb" src="icons/icons8-youtube-60.png" alt="YouTube"><img class="gg" src="icons/icons8-youtube-60_gold.png" alt=""></a>
+            <a class="sicon" href="https://space.bilibili.com/1823118814?spm_id_from=333.788.0.0" target="_blank" rel="noopener" title="哔哩哔哩"><img class="gb" src="icons/icons8-tv-60.png" alt="哔哩哔哩"><img class="gg" src="icons/icons8-tv-60_gold.png" alt=""></a>
+            <a class="sicon" href="https://streetvoice.com/chentasticzone/" target="_blank" rel="noopener" title="StreetVoice"><img class="gb" src="icons/sv_logo.png" alt="StreetVoice"><img class="gg" src="icons/sv_logo_gold.png" alt=""></a>
+            <a class="sicon" href="https://music.youtube.com/@chentasticzone" target="_blank" rel="noopener" title="YouTube Music"><img class="gb" src="icons/icons8-play-60.png" alt="YouTube Music"><img class="gg" src="icons/icons8-play-60_gold.png" alt=""></a>
+            <a class="sicon" href="https://v.douyin.com/I-iL_YECKcI/" target="_blank" rel="noopener" title="抖音"><img class="gb" src="icons/icons8-tiktok-60.png" alt="抖音"><img class="gg" src="icons/icons8-tiktok-60_gold.png" alt=""></a>
+            <a class="sicon" href="https://qishui.douyin.com/s/iC9UMTm9" target="_blank" rel="noopener" title="汽水音乐"><img class="gb" src="icons/icons8-kawaii-soda-60.png" alt="汽水音乐"><img class="gg" src="icons/icons8-kawaii-soda-60_gold.png" alt=""></a>
+            <a class="sicon" href="https://linktr.ee/chentasticzone" target="_blank" rel="noopener" title="SoundCloud"><img class="gb" src="icons/icons8-soundcloud-60.png" alt="SoundCloud"><img class="gg" src="icons/icons8-soundcloud-60_gold.png" alt=""></a>
+            <a class="sicon" href="https://genius.com/artists/Chen-virtual" target="_blank" rel="noopener" title="Genius"><img class="gb" src="icons/icons8-genius-60.png" alt="Genius"><img class="gg" src="icons/icons8-genius-60_gold.png" alt=""></a>
           </div>
         </div>
         <div class="studio-col">
-          <img class="studio-logo" src="../studio-logo.png" alt="未陈弄">
+          <img class="studio-logo" src="studio-logo.png" alt="未陈弄">
           <h2 class="about-col-title">ChentasticZone 未陈弄</h2>
           <p class="about-col-body">专注于<span class="ai-hl">AI</span>驱动、突破路径依赖的叙事系统设计与内容创作。<br>每一拍、每一帧，每一处讯息的转折，都值得反复打磨。</p>
           <p class="about-col-body studio-body-en">A Digital Narrative Studio / Creative Collective focusing on<br>breaking "formulaic stagnation" leveraging AI synergies.<br>Every beat, every frame, and every narrative pivot<br>deserves to be crafted and aligned.</p>
           <a class="studio-link" href="https://iancstudio.blogspot.com/" target="_blank" rel="noopener"><span class="studio-pre">原 </span>Ian C. Studio</a>
-          <a class="studio-email" href="../mailto:chentasticzone@outlook.com">chentasticzone@outlook.com</a>
+          <a class="studio-email" href="mailto:chentasticzone@outlook.com">chentasticzone@outlook.com</a>
         </div>
       </div>
     
@@ -683,6 +691,7 @@ var(--accent-2));
   // 5 支官方影片（新→舊）；縮圖抓 maxresdefault，沒有自動退 mqdefault
   // 之後想放任何比例的圖都可以：img 用 contain 完整呈現，卡片一律不裁切
   const covers = [ /* 縮圖：本地已裁切 4:3 封面（covers/ 資料夾）；onerror 退 YT；bvid＝簡體版內嵌用 */
+    { img: "covers/to-the-light4x3.jpg", title: "To the Light", tint: "#4d6a99", ytId: "3CVMP0oD__c", bvid: "BV1qEYJ6qEbc" },
     { img: "covers/youshine4x3.jpg", title: "你的灿烂 (You Shine)",   tint: "#f2c14e", ytId: "htdrIVp0toM", bvid: "BV16E8q6SEoV" },
     { img: "covers/rain-funk4x3.jpg", title: "雨的节奏.funk",       tint: "#6a8fd8", ytId: "bDFn-ODguzs", bvid: "BV1GggG6nEok" },
     { img: "covers/zzz4x3.jpg", title: "（？）很大",          tint: "#9B89C5", ytId: "GwIY0M_RZak", bvid: "BV1TJGw6HEd1" },
@@ -769,7 +778,7 @@ var(--accent-2));
   covers.forEach((c, i) => {
     const el = document.createElement("div");
     el.className = "card";
-    el.innerHTML = '<div class="imgwrap"><img src="../' + c.img + '" alt="' + c.title + ' 封面"></div><div class="playglyph"><svg style="width:12%" viewBox="0 0 48 48" aria-hidden="true" opacity=".9"><path d="M16 10 L40 24 L16 38 Z" fill="#ffffff" stroke="#ffffff" stroke-width="8" stroke-linejoin="round"/></svg></div>';
+    el.innerHTML = '<div class="imgwrap"><img src="' + c.img + '" alt="' + c.title + ' 封面"></div><div class="playglyph"><svg style="width:12%" viewBox="0 0 48 48" aria-hidden="true" opacity=".9"><path d="M16 10 L40 24 L16 38 Z" fill="#ffffff" stroke="#ffffff" stroke-width="8" stroke-linejoin="round"/></svg></div>';
     const im = el.querySelector("img");
     im.onerror = function () { // B站縮圖抓不到 → 自動退回 YouTube 縮圖（maxres → mq），永不開天窗
       this.onerror = function () { this.onerror = null; this.src = "https://i.ytimg.com/vi/" + c.ytId + "/mqdefault.jpg"; };

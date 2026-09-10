@@ -227,6 +227,13 @@ var(--accent-2));
   .meta button:hover { color: #d4b168; } /* 假金色 */
   .meta button:active { transform: scale(.9); }
   .arrow { width: calc(25 * var(--u)); height: auto; display: block; }
+  /* 桌面：左右箭头固定在离中心 16vw（clamp）处，不随标题长短伸缩 */
+  @media (min-width: 769px) {
+    .meta { position: relative; }
+    .meta #prev, .meta #next { position: absolute; top: 50%; transform: translateY(-50%); }
+    .meta #prev { left: calc(50% - clamp(90px, 11vw, 200px)); }
+    .meta #next { right: calc(50% - clamp(90px, 11vw, 200px)); }
+  }
 
   /* ---------- Platform marquee ---------- */
   .platforms {
@@ -324,7 +331,7 @@ var(--accent-2));
     display: grid;
     grid-template-columns: 44.5% 44.5%;
     justify-content: space-between;
-    align-items: start;
+    align-items: stretch;
     gap: 0;
   }
   /* 手機：單欄堆疊（先小陳、再未陳弄） */
@@ -433,7 +440,7 @@ var(--accent-2));
     font-size: clamp(13px, 1.25vw, 15px);
     line-height: 1.6;
     text-align: center;
-    margin-top: clamp(20px, 2.2vw, 30px);
+    margin-top: auto;
     max-width: 100%;
     transition: color .3s ease;
   }
@@ -503,7 +510,7 @@ var(--accent-2));
     text-decoration: none;
     font-weight: 500;
     font-size: clamp(13px, 1.2vw, 15px);
-    margin-top: clamp(53px, 3.5vw, 54px);
+    margin-top: auto;
     transition: color .25s;
     cursor: pointer;
     text-align: center;
@@ -590,6 +597,7 @@ var(--accent-2));
             <div class="chen-gallery-stage" id="chengallerystage">
               <div class="chen-gallery-track" id="chengallerytrack">
                 <div class="chen-gallery-item"><img src="covers/zzz.jpg" alt="zzz"></div>
+                <div class="chen-gallery-item"><img src="covers/to-the-light.jpg" alt="To the Light"></div>
                 <div class="chen-gallery-item"><img src="covers/starfire.jpg" alt="Starfire"></div>
                 <div class="chen-gallery-item"><img src="covers/we-share.jpg" alt="We Share"></div>
                 <div class="chen-gallery-item"><img src="covers/rain-funk.jpg" alt="雨的節奏.funk"></div>
@@ -686,6 +694,7 @@ var(--accent-2));
   // 5 支官方影片（新→舊）；縮圖抓 maxresdefault，沒有自動退 mqdefault
   // 之後想放任何比例的圖都可以：img 用 contain 完整呈現，卡片一律不裁切
   const covers = [ /* 縮圖：本地已裁切 4:3 封面（covers/ 資料夾）；onerror 退 YT；bvid＝簡體版內嵌用 */
+    { img: "covers/to-the-light4x3.jpg", title: "To the Light", tint: "#4d6a99", ytId: "3CVMP0oD__c", bvid: "BV1qEYJ6qEbc" },
     { img: "covers/youshine4x3.jpg", title: "你的燦爛 (You Shine)",   tint: "#f2c14e", ytId: "htdrIVp0toM", bvid: "BV16E8q6SEoV" },
     { img: "covers/rain-funk4x3.jpg", title: "雨的節奏.funk",       tint: "#6a8fd8", ytId: "bDFn-ODguzs", bvid: "BV1GggG6nEok" },
     { img: "covers/zzz4x3.jpg", title: "（？）很大",          tint: "#9B89C5", ytId: "GwIY0M_RZak", bvid: "BV1TJGw6HEd1" },
